@@ -1,38 +1,45 @@
-package entrada;
+package escuchadores;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 
 import personajes.Jugador;
 
-public class EscuchadorTecladoJugador extends EscuchadorTeclado {
-    private Jugador jugador; //El jugador que se va a mover con este escuchador
+public class TecladoJugador implements InputProcessor {
+    private Jugador jugador;
 
-    public EscuchadorTecladoJugador(Jugador j){
-        super(j.getCamara(),j.getMapa());
-        jugador=j;
+    public TecladoJugador(Jugador j){
+        super();
+        this.jugador=j;
     }
+
 
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode){
-            case Input.Keys.W:
-                jugador.moverCamaraTile('u');
-                jugador.moverJugadorTile('u',keepCameraInBounds());
+            case Input.Keys.UP:
+                jugador.mover('u');
                 break;
-            case Input.Keys.S:
-                jugador.moverCamaraTile('d');
-                jugador.moverJugadorTile('d',keepCameraInBounds());
-
+            case Input.Keys.DOWN:
+                jugador.mover('d');
                 break;
-            case Input.Keys.A:
-                jugador.moverCamaraTile('l');
-                jugador.moverJugadorTile('l',keepCameraInBounds());
-
+            case Input.Keys.LEFT:
+                jugador.mover('l');
                 break;
-            case Input.Keys.D:
-                jugador.moverCamaraTile('r');
-                jugador.moverJugadorTile('r',keepCameraInBounds());
-
+            case Input.Keys.RIGHT:
+                jugador.mover('r');
+                break;
+            case Input.Keys.MINUS:
+                if(jugador.getCamara().zoom<1) {
+                    jugador.getCamara().zoom+=0.1;
+                    jugador.getCamara().update();
+                }
+                break;
+            case Input.Keys.PLUS:
+                if(jugador.getCamara().zoom>0.5) {
+                    jugador.getCamara().zoom -= 0.1;
+                    jugador.getCamara().update();
+                }
                 break;
         }
         return false;
@@ -73,4 +80,3 @@ public class EscuchadorTecladoJugador extends EscuchadorTeclado {
         return false;
     }
 }
-
