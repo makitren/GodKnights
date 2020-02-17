@@ -8,12 +8,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Jugador {
+import java.util.ArrayList;
+
+import objetos.Objetos;
+
+public class Jugador extends Actor {
     private Sprite sprite;
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
+    protected ArrayList<Objetos> objetos;
+    protected boolean colliding;
     private Batch batch;// La uso para dibujar en este batch al jugador. Podría pasarlo por constructor. Es decisión nuestra como programadoeres.
 
     //Variables para poder redimensionar al jugador según el zoom
@@ -37,13 +45,11 @@ public class Jugador {
 
         //Como siempre estaré en el medio, voy a poner el sprite en el medio
         //Como la cámara está centrada en el medio, voy a necesitar coger el tile de ahi
-        Vector3 posPixels = camara.project(
-                new Vector3(camara.position.x,camara.position.y,0));
-        sprite.setPosition(posPixels.x,posPixels.y);
+
+        sprite.setPosition(23,23);
     }
 
     public void dibujar(){
-        ajustarACamara();
         batch.begin();
         sprite.draw(batch);
         batch.end();
@@ -62,6 +68,20 @@ public class Jugador {
                         /alturaMapaPixels)
                         *(1/camara.zoom)*5);
     }
+    public Rectangle getHitBox(){
+        return sprite.getBoundingRectangle();
+    }
+
+    public boolean checkCollision(Objetos c){
+        boolean overlaps=getHitBox().overlaps(c.getHitBox());
+        if(overlaps&&colliding==false){
+            colliding=true;
+            Gdx.app.log("Colisionando","con "+c.getClass().getName());
+        }else if(!overlaps){
+            colliding=false;
+        }
+        return colliding;
+    }
 
     /**
      * Mueve el jugador un tile en la dirección establecida
@@ -72,31 +92,27 @@ public class Jugador {
             case 'u':
                 //Cambio posición del jugador, todavía no cambia nada visualmente
                 if(posicionTiles.y<this.alturaMapaTiles-1) {
-                    posicionTiles.y++;
+                    sprite.setPosition(sprite.getX(), sprite.getY()+10);
                 }
                 //Pongo la cámara donde esté el jugador, para que siempre quede centrado en el tile en que está
                 //Recuerdo que el jugador no está de verdad en el tile: El dibujado
                 //del sprite es independiente del dibujado del mapa, y solo estamos
                 //moviendo el mapa para hacer parecer que el personaje se mueve.
-                camara.position.y=posicionTiles.y;
                 break;
             case 'd':
                 if(posicionTiles.y>0) {
-                    posicionTiles.y--;
+                    sprite.setPosition(sprite.getX(), sprite.getY()-10);
                 }
-                camara.position.y=posicionTiles.y;
                 break;
             case 'l':
                 if(posicionTiles.x>0) {
-                    posicionTiles.x--;
+                    sprite.setPosition(sprite.getX()-10, sprite.getY());
                 }
-                camara.position.x=posicionTiles.x;
                 break;
             case 'r':
                 if(posicionTiles.x<this.anchuraMapaTiles-1) {
-                    posicionTiles.x++;
+                    sprite.setPosition(sprite.getX()+10, sprite.getY());
                 }
-                camara.position.x=posicionTiles.x;
                 break;
         }
         camara.update();
