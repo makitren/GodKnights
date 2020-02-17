@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="18">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" source="InteriorCasaInicial.tsx"/>
- <layer id="1" name="Capa de patrones 1" width="32" height="24" locked="1">
+ <layer id="1" name="Capa de patrones 1" width="32" height="24" visible="0" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -57,22 +57,4 @@
 737,738,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,767,768
 </data>
  </layer>
- <objectgroup color="#00aa00" id="4" name="colisionable">
-  <object id="1" x="770.147" y="421.014" width="57.8777" height="112.021"/>
-  <object id="2" x="713.203" y="426.615" width="48.5426" height="69.0799"/>
-  <object id="3" x="583.445" y="421.947" width="51.3431" height="59.7447"/>
-  <object id="4" x="322.062" y="426.615" width="123.224" height="110.154"/>
-  <object id="5" x="261.383" y="432.216" width="56.0107" height="59.7447"/>
-  <object id="6" x="199.771" y="449.953" width="51.3431" height="42.008"/>
-  <object id="7" x="135.359" y="614.251" width="114.822" height="69.0799"/>
-  <object id="8" x="79.3485" y="318.327" width="43.875" height="57.8777"/>
-  <object id="9" x="84.9496" y="205.373" width="92.4176" height="43.875"/>
-  <object id="10" x="260.45" y="139.093" width="371.538" height="179.234"/>
-  <object id="11" x="48.5426" y="8.4016" width="922.309" height="126.958"/>
-  <object id="12" x="950.315" y="135.359" width="28.0053" height="622.652"/>
-  <object id="13" x="578.777" y="745.876" width="395.809" height="19.6037"/>
-  <object id="14" x="59.7447" y="747.743" width="379.939" height="18.6702"/>
-  <object id="15" x="44.8086" y="117.622" width="24.2713" height="640.389"/>
-  <object id="16" x="242.713" y="311.793" width="0.933512" height="0.933512"/>
- </objectgroup>
 </map>
