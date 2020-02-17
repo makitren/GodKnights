@@ -14,13 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 
-import objetos.Objetos;
+import actores.Actores;
 
 public class Jugador extends Actor {
     private Sprite sprite;
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
-    protected ArrayList<Objetos> objetos;
     protected boolean colliding;
     private Batch batch;// La uso para dibujar en este batch al jugador. Podría pasarlo por constructor. Es decisión nuestra como programadoeres.
 
@@ -72,7 +71,7 @@ public class Jugador extends Actor {
         return sprite.getBoundingRectangle();
     }
 
-    public boolean checkCollision(Objetos c){
+    public boolean checkCollision(Actores c){
         boolean overlaps=getHitBox().overlaps(c.getHitBox());
         if(overlaps&&colliding==false){
             colliding=true;

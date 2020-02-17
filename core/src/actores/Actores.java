@@ -1,10 +1,12 @@
 package actores;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -12,22 +14,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import escuchadores.TecladoJugador;
-import objetos.Objetos;
 
 public class Actores extends Actor {
     protected Sprite sprite;
-    protected ArrayList<Objetos> objetos;
-
+    private Rectangle dimensiones;
     private Batch batch;
     protected boolean colliding; //Nos detecta si está colisionando o no
-
     protected String nombre;
+    ShapeRenderer shapeRenderer;
+
     public Actores(String rutaTextura) {
         //Cambio Posición del Sprite
         sprite=new Sprite(new Texture(rutaTextura));
-
         batch=new SpriteBatch();
-        objetos=new ArrayList<Objetos>();
         sprite.setBounds(0,0, Gdx.graphics.getWidth()*10,Gdx.graphics.getHeight()*10);
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/7);
         sprite.setPosition(30,23);
@@ -38,11 +37,11 @@ public class Actores extends Actor {
 
 
     public Actores(String rutaTextura, float x, float y, float posAlt, float posAnc) {
+        shapeRenderer=new ShapeRenderer();
         //Cambio Posición del Sprite
         sprite=new Sprite(new Texture(rutaTextura));
-
+        dimensiones=new Rectangle((int)x,(int)y,(int)posAlt,(int)posAnc);
         batch=new SpriteBatch();
-        objetos=new ArrayList<Objetos>();
         sprite.setBounds(x,y, 50,50);
         this.setSize(Gdx.graphics.getWidth()*100,Gdx.graphics.getHeight()*100);
         sprite.setPosition(posAnc,posAlt);
@@ -55,11 +54,24 @@ public class Actores extends Actor {
         sprite.draw(batch);
         batch.end();
     }
+    /*
+    public void dibujarConHitbox(){
+        batch.begin();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.box(20,20,0,40,20,20);
+        shapeRenderer.setColor(Color.BLUE);
+        sprite.draw(batch);
+        shapeRenderer.end();
+        batch.end();
+    }
+    */
+
+
     public Rectangle getHitBox(){
         return sprite.getBoundingRectangle();
     }
 
-    public boolean checkCollision(Objetos c){
+    public boolean checkCollision(Actores c){
         boolean overlaps=getHitBox().overlaps(c.getHitBox());
         if(overlaps&&colliding==false){
             colliding=true;
