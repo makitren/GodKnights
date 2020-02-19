@@ -1,11 +1,13 @@
 package personajes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
@@ -21,6 +23,7 @@ public class Jugador extends Actor {
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
     protected boolean colliding;
+    private ShapeRenderer shapeRenderer;
     private Batch batch;// La uso para dibujar en este batch al jugador. Podría pasarlo por constructor. Es decisión nuestra como programadoeres.
 
     //Variables para poder redimensionar al jugador según el zoom
@@ -33,6 +36,7 @@ public class Jugador extends Actor {
     public Jugador(OrthographicCamera camara,TiledMap mapa) {
         this.sprite = new Sprite(new Texture("Sprites/playerFemale.png"));
         this.camara = camara;
+        shapeRenderer=new ShapeRenderer();
         posicionTiles=this.camara.position;
         batch=new SpriteBatch();
         this.mapa=mapa;
@@ -52,6 +56,8 @@ public class Jugador extends Actor {
         batch.begin();
         sprite.draw(batch);
         batch.end();
+        checkCollision(this);
+        dibujarConHitbox();
     }
 
     /**
@@ -71,7 +77,23 @@ public class Jugador extends Actor {
         return sprite.getBoundingRectangle();
     }
 
-    public boolean checkCollision(Actores c){
+    public void dibujarConHitbox(){
+
+        batch.begin();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
+      if(this.colliding){
+          shapeRenderer.setColor(Color.RED);
+      }else{
+          shapeRenderer.setColor(Color.BLUE);
+      }
+        sprite.draw(batch);
+        shapeRenderer.end();
+        batch.end();
+    }
+
+
+    public boolean checkCollision(Jugador c){
         boolean overlaps=getHitBox().overlaps(c.getHitBox());
         if(overlaps&&colliding==false){
             colliding=true;

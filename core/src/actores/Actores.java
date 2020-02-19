@@ -9,9 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import javax.swing.Renderer;
 
 import escuchadores.TecladoJugador;
 
@@ -21,16 +24,15 @@ public class Actores extends Actor {
     private Batch batch;
     protected boolean colliding; //Nos detecta si está colisionando o no
     protected String nombre;
-    ShapeRenderer shapeRenderer;
+    private ShapeRenderer shapeRenderer;
 
     public Actores(String rutaTextura) {
         //Cambio Posición del Sprite
         sprite=new Sprite(new Texture(rutaTextura));
         batch=new SpriteBatch();
-        sprite.setBounds(0,0, Gdx.graphics.getWidth()*10,Gdx.graphics.getHeight()*10);
-        this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/7);
-        sprite.setPosition(30,23);
-        this.setPosition(0,0); //Cambio posición del actor
+        sprite.setBounds(30,23, Gdx.graphics.getWidth()*10,Gdx.graphics.getHeight()*10);
+        this.setSize(sprite.getWidth(),sprite.getHeight());
+        this.setPosition(sprite.getX(),sprite.getY()); //Cambio posición del actor
         this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
         sprite.setOrigin(this.getOriginX(),this.getOriginY());
     }
@@ -48,23 +50,29 @@ public class Actores extends Actor {
         this.setPosition(posAnc,posAlt); //Cambio posición del actor
         this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
         sprite.setOrigin(this.getOriginX(),this.getOriginY());
+
+
+
     }
     public void dibujar(){
         batch.begin();
+
         sprite.draw(batch);
         batch.end();
+        dibujarConHitbox();
+
     }
-    /*
+
     public void dibujarConHitbox(){
         batch.begin();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.box(20,20,0,40,20,20);
+        shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
         shapeRenderer.setColor(Color.BLUE);
         sprite.draw(batch);
         shapeRenderer.end();
         batch.end();
     }
-    */
+
 
 
     public Rectangle getHitBox(){
