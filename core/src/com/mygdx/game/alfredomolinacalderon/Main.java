@@ -29,6 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
 import actores.Actores;
+import actores.Colisiones;
 import actores.EntradaCiudad;
 import actores.SalidaCiudad;
 import actores.Tienda1;
@@ -50,7 +51,7 @@ public class Main extends Game {
 	private static int WIDTH; //Aquí almacenaremos la anchura en tiles
 	private static int HEIGHT; //Aquí almacenaremos la altura en tiles
 	public static final float unitScale = 1 / 32f; //Nos servirá para establecer que la pantalla se divide en tiles de 16 pixeles;
-    private static final float pixelsPorCuadro=16f;
+    private static final float pixelsPorCuadro=32f;
     private Box2DDebugRenderer debugRenderer;
     private AssetManager manager;
     private TiledMapTileLayer terrainLayer;
@@ -65,6 +66,7 @@ public class Main extends Game {
     private EntradaCiudad ec;
     private SalidaCiudad sc;
     private TiledMap map;
+    private Colisiones colisiones;
 
 	@Override
 	public void create() {
@@ -78,7 +80,8 @@ public class Main extends Game {
 		float h = Gdx.graphics.getHeight(); //Obtenemos la atura de nuestra pantalla
 		map = manager.get("Mapas/CiudadBosqueFinal.tmx",TiledMap.class); //Cargamos el tilemap desde assets
 
-
+        colisiones=new Colisiones();
+        colisiones.checkCollision(map,jugador);
 		camera = new OrthographicCamera(640.f,480.f); //Declaramos la cámara a través de la que veremos el mundo
 		//camera.zoom=0.1f; //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
 		WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
@@ -89,6 +92,7 @@ public class Main extends Game {
 		camera.zoom=1f;
 		renderer = new OrthogonalTiledMapRenderer(map, unitScale); //Establecemos el renderizado del mapa dividido en Tiles de 16 dp.
 		pantalla=new Stage(new FillViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
+
 		pantalla.addActor(t=new Tienda1(10,10));
 		pantalla.addActor(t2=new Tienda2(10,10));
         pantalla.addActor(t3=new Tienda3(10,10));
@@ -97,13 +101,17 @@ public class Main extends Game {
         pantalla.addActor(t6=new Tienda6(10,10));
         pantalla.addActor(ec=new EntradaCiudad(10,10));
         pantalla.addActor(sc=new SalidaCiudad(10,10));
-		jugador=new Jugador(camera,map);
+		jugador=new Jugador(map,world);
+        pantalla.addActor(jugador);
 		camera.update();
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(new TecladoJugador(jugador));
 		Gdx.input.setInputProcessor(multiplexer);
-
-        for (MapObject objeto:map.getLayers().get("Colisionables").getObjects()){
+        for(int b=0;b<colisiones.getActores().length-1;b++){
+            pantalla.addActor(colisiones.getActores()[b]);
+        }
+        /*
+		for (MapObject objeto:map.getLayers().get("Colisionables").getObjects()){
             BodyDef propiedadesRectangulo= new BodyDef(); //Establecemos las propiedades del cuerpo
             propiedadesRectangulo.type = BodyDef.BodyType.StaticBody;
             Body rectanguloSuelo = world.createBody(propiedadesRectangulo);
@@ -113,6 +121,19 @@ public class Main extends Game {
             propiedadesFisicasRectangulo.density = 1f;
             rectanguloSuelo.createFixture(propiedadesFisicasRectangulo);
         }
+        for (MapObject objeto:map.getLayers().get("EntradaSalida").getObjects()){
+            BodyDef propiedadesRectangulo= new BodyDef(); //Establecemos las propiedades del cuerpo
+            propiedadesRectangulo.type = BodyDef.BodyType.StaticBody;
+            Body rectanguloSuelo = world.createBody(propiedadesRectangulo);
+            FixtureDef propiedadesFisicasRectangulo=new FixtureDef();
+            Shape formaRectanguloSuelo=getRectangle((RectangleMapObject)objeto);
+            propiedadesFisicasRectangulo.shape = formaRectanguloSuelo;
+            propiedadesFisicasRectangulo.density = 1f;
+            rectanguloSuelo.createFixture(propiedadesFisicasRectangulo);
+        }
+
+         */
+
 		MapLayers mapLayers=map.getLayers();
 		terrainLayer=(TiledMapTileLayer)mapLayers.get("suelo");
 		terrainLayer2=(TiledMapTileLayer)mapLayers.get("objetos");
@@ -147,7 +168,7 @@ public class Main extends Game {
             t6.dibujar();
             ec.dibujar();
             sc.dibujar();
-
+			pantalla.act(Gdx.graphics.getDeltaTime());
 
 
 			pantalla.setDebugAll(true);

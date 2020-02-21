@@ -12,14 +12,25 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 
+import Mapas.Mapa1;
 import actores.Actores;
+import actores.Colisiones;
 
 public class Jugador extends Actor {
+    float x,y;
     private Sprite sprite;
+    private Texture texture;
+    private Mapa1 mapaInicial;
+    private World mundo;
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
     protected boolean colliding;
@@ -32,9 +43,20 @@ public class Jugador extends Actor {
     private int alturaMapaPixels; //Altura del mapa donde nos movemos en pixels
     private int anchuraMapaTiles; //Anchura del mapa donde nos movemos en  tiles
     private int alturaMapaTiles; //Anchura del mapa donde nos movemos en tiles
+    private Rectangle rectangle;
+    private Rectangle[]rectangles;
+    private Colisiones colisiones;
 
-    public Jugador(OrthographicCamera camara,TiledMap mapa) {
-        this.sprite = new Sprite(new Texture("Sprites/playerFemale.png"));
+    public Jugador(int x, int y, float anchoJugador, float largoJugador,TiledMap mapa,World m) {
+        this.x = x;
+        this.y = y;
+        this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
+        colisiones=new Colisiones();
+        mapaInicial=new Mapa1();
+        colisiones.checkCollision(mapaInicial.getMap(),this);
+        mundo=m;
+        texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
+        this.sprite = new Sprite(texture);
         this.camara = camara;
         shapeRenderer=new ShapeRenderer();
         posicionTiles=this.camara.position;
@@ -44,11 +66,6 @@ public class Jugador extends Actor {
         alturaMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         anchuraMapaPixels=anchuraMapaTiles*(int)mapa.getProperties().get("width");
         alturaMapaPixels=alturaMapaTiles*(int)mapa.getProperties().get("height");
-
-
-        //Como siempre estaré en el medio, voy a poner el sprite en el medio
-        //Como la cámara está centrada en el medio, voy a necesitar coger el tile de ahi
-
         sprite.setPosition(23,23);
     }
 
@@ -95,6 +112,8 @@ public class Jugador extends Actor {
 
     public boolean checkCollision(Jugador c){
         boolean overlaps=getHitBox().overlaps(c.getHitBox());
+
+
         if(overlaps&&colliding==false){
             colliding=true;
             Gdx.app.log("Colisionando","con "+c.getClass().getName());
@@ -114,6 +133,7 @@ public class Jugador extends Actor {
                 //Cambio posición del jugador, todavía no cambia nada visualmente
                 if(posicionTiles.y<this.alturaMapaTiles-1) {
                     sprite.setPosition(sprite.getX(), sprite.getY()+10);
+                    System.out.println(sprite.getX()+""+sprite.getY());
                 }
                 //Pongo la cámara donde esté el jugador, para que siempre quede centrado en el tile en que está
                 //Recuerdo que el jugador no está de verdad en el tile: El dibujado
@@ -123,16 +143,19 @@ public class Jugador extends Actor {
             case 'd':
                 if(posicionTiles.y>0) {
                     sprite.setPosition(sprite.getX(), sprite.getY()-10);
+                    System.out.println(sprite.getX()+""+sprite.getY());
                 }
                 break;
             case 'l':
                 if(posicionTiles.x>0) {
                     sprite.setPosition(sprite.getX()-10, sprite.getY());
+                    System.out.println(sprite.getX()+""+sprite.getY());
                 }
                 break;
             case 'r':
                 if(posicionTiles.x<this.anchuraMapaTiles-1) {
                     sprite.setPosition(sprite.getX()+10, sprite.getY());
+                    System.out.println(sprite.getX()+""+sprite.getY());
                 }
                 break;
         }

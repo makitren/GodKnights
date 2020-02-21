@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="42" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="64">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="42" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="124">
  <tileset firstgid="1" source="CiudadBosqueResize.tsx"/>
- <layer id="1" name="suelo" width="42" height="32">
+ <layer id="1" name="suelo" width="42" height="32" locked="1">
   <data encoding="csv">
 47,48,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,607,279,280,281,282,283,284,188,188,189,188,188,189,188,188,189,188,188,188,188,188,188,188,189,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,649,321,322,323,324,325,279,280,281,282,283,284,280,281,282,283,279,280,281,282,40,41,188,189,
@@ -37,7 +37,7 @@
 1022,1023,1024,1025,1307,1308,1309,1307,1022,1022,1022,1022,1022,1022,1022,1022,1023,1024,1025,0,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344
 </data>
  </layer>
- <layer id="2" name="objetos" width="42" height="32">
+ <layer id="2" name="objetos" width="42" height="32" locked="1">
   <data encoding="csv">
 0,0,0,88,758,759,758,759,758,759,758,759,758,759,758,759,758,759,103,0,0,0,0,0,0,0,0,0,31,32,0,0,0,0,0,0,0,0,0,0,0,0,
 758,759,129,130,800,801,800,801,800,801,800,801,800,801,800,801,800,801,145,0,0,0,0,0,0,0,0,0,73,74,0,0,0,36,37,38,0,0,0,0,0,0,
@@ -73,7 +73,56 @@
 1303,1304,0,1306,0,0,0,0,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Colisionables" locked="1">
-  <object id="63" x="1.35511" y="825.263" width="93.5027" height="100.278"/>
+ <objectgroup color="#aa0000" id="4" name="Colisionables">
+  <object id="64" x="274" y="549" width="129" height="145"/>
+  <object id="65" x="272" y="806" width="132" height="114"/>
+  <object id="66" x="7" y="581" width="103" height="113"/>
+  <object id="67" x="276" y="212" width="315" height="124"/>
+  <object id="68" x="272" y="342" width="135" height="96"/>
+  <object id="69" x="408" y="341"/>
+  <object id="70" x="408" y="341" width="95" height="80"/>
+  <object id="72" x="8" y="3" width="109" height="469"/>
+  <object id="73" x="119" y="5" width="477" height="83"/>
+  <object id="74" x="581" y="335" width="25" height="685"/>
+  <object id="75" x="261" y="995" width="338" height="25"/>
+  <object id="76" x="7" y="992" width="114" height="27"/>
+  <object id="78" x="7" y="802" width="107" height="119"/>
+  <object id="79" x="419" y="613" width="113" height="23"/>
+  <object id="80" x="499" y="638" width="25" height="21"/>
+  <object id="81" x="452" y="484" width="22" height="24"/>
+  <object id="86" x="612" y="362" width="439" height="74"/>
+  <object id="87" x="1099" y="364" width="235" height="76"/>
+  <object id="88" x="1029" y="611" width="51" height="57"/>
+  <object id="89" x="1129" y="770" width="115" height="24"/>
+  <object id="90" x="1153" y="898" width="26" height="26"/>
+  <object id="91" x="608" y="434" width="26" height="585"/>
+  <object id="93" x="641" y="965" width="700" height="55"/>
+  <object id="94" x="1285" y="441" width="54" height="525"/>
+  <object id="95" x="775" y="875" width="80" height="80"/>
+  <object id="96" x="678" y="889" width="51" height="66"/>
+  <object id="97" x="738" y="826" width="60" height="33"/>
+  <object id="98" x="834" y="576" width="29" height="59"/>
+  <object id="99" x="905" y="582" width="46" height="46"/>
+  <object id="100" x="847" y="487" width="71" height="52"/>
+  <object id="101" x="710" y="549" width="55" height="53"/>
+  <object id="104" x="712" y="266" width="47" height="46"/>
+  <object id="105" x="677" y="71" width="55" height="53"/>
+  <object id="106" x="1059" y="100" width="59" height="53"/>
+  <object id="107" x="1224" y="64" width="46" height="28"/>
+  <object id="108" x="900" y="39" width="56" height="83"/>
+  <object id="109" x="897" y="808" width="59" height="50"/>
+  <object id="110" x="711" y="677" width="17" height="22"/>
+  <object id="111" x="708" y="642" width="21" height="27"/>
+  <object id="119" x="-8.71278" y="460.532" width="18.6702" height="542.681"/>
+  <object id="120" x="222.798" y="995.746" width="37.3405" height="22.4043"/>
+  <object id="121" x="123.224" y="993.256" width="34.8511" height="29.8724"/>
+  <object id="122" x="1325.59" y="0" width="22.4043" height="385.851"/>
+  <object id="123" x="596.203" y="2.48936" width="741.831" height="28.6277"/>
+ </objectgroup>
+ <objectgroup color="#0000ff" id="5" name="Entrada" locked="1">
+  <object id="117" x="729.384" y="517.788" width="24.8936" height="22.4043"/>
+ </objectgroup>
+ <objectgroup color="#00aa00" id="6" name="Salida" locked="1">
+  <object id="118" x="170.521" y="990.767" width="41.0745" height="29.8724"/>
  </objectgroup>
 </map>
