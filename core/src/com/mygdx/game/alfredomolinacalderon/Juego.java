@@ -41,7 +41,7 @@ import actores.Tienda6;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
-public class Main extends Game {
+public class Juego extends Game {
     private World world;
     private Actores stage;
     private OrthogonalTiledMapRenderer renderer; //Clase auxiliar para renderizar un mapa.
@@ -101,7 +101,7 @@ public class Main extends Game {
         pantalla.addActor(t6=new Tienda6(10,10));
         pantalla.addActor(ec=new EntradaCiudad(10,10));
         pantalla.addActor(sc=new SalidaCiudad(10,10));
-		jugador=new Jugador(map,world);
+		//jugador=new Jugador(map,world);
         pantalla.addActor(jugador);
 		camera.update();
 		InputMultiplexer multiplexer = new InputMultiplexer();

@@ -1,5 +1,6 @@
 package Mapas;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayers;
@@ -9,15 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class Mapa3{
-    private TiledMap map;
-        private AssetManager manager;
-        private int tileWidth, tileHeight,
-                mapWidthInTiles, mapHeightInTiles,
-                mapWidthInPixels, mapHeightInPixels;
-        private OrthographicCamera camera;
-        private OrthogonalTiledMapRenderer renderer;
-        private TiledMapTileLayer terrainLayer,terrainLayer2,terrainLayer3;
+public class Mapa3 extends BaseScreen {
+
 
         public Mapa3(){
             manager = new AssetManager();
@@ -65,7 +59,37 @@ public class Mapa3{
             return mapHeightInPixels;
         }
 
-        public void dispose() {
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    public void dispose() {
             manager.dispose();
         }
 
