@@ -1,19 +1,29 @@
 package Mapas;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.mygdx.game.alfredomolinacalderon.Juego;
+
+import escuchadores.TecladoJugador;
 
 public class Mapa4 extends BaseScreen {
 
 
-    public Mapa4(){
+    public Mapa4(Juego g){
+        super(g);
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
         manager.load("Mazmorra1Final.tmx", TiledMap.class);
@@ -36,6 +46,20 @@ public class Mapa4 extends BaseScreen {
         terrainLayer3 = (TiledMapTileLayer) mapLayers.get("Salida");
 
         renderer = new OrthogonalTiledMapRenderer(map);
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(new TecladoJugador(jugador));
+        Gdx.input.setInputProcessor(multiplexer);
+    }
+    private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
+        Rectangle rectangle = rectangleObject.getRectangle();
+        PolygonShape polygon = new PolygonShape();
+        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) /pixelsPorCuadro,
+                (rectangle.y + rectangle.height * 0.5f ) / pixelsPorCuadro);
+        polygon.setAsBox(rectangle.width * 0.5f /pixelsPorCuadro,
+                rectangle.height * 0.5f / pixelsPorCuadro,
+                size,
+                0.0f);
+        return polygon;
     }
 
     public void renderSuelos() {

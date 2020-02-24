@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import java.util.ArrayList;
 
@@ -27,10 +28,11 @@ import actores.Colisiones;
 
 public class Jugador extends Actor {
     float x,y;
+    private Juego juego;
     private Sprite sprite;
     private Texture texture;
-    private Mapa1 mapaInicial;
     private World mundo;
+    private Mapa1 mapa1;
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
     protected boolean colliding;
@@ -46,27 +48,24 @@ public class Jugador extends Actor {
     private Rectangle rectangle;
     private Rectangle[]rectangles;
     private Colisiones colisiones;
+//int x, int y, float anchoJugador, float largoJugador,        ESTO VA EN EL CONSTRUCTOR CUANDO VAYA A EMPEZAR EL JUEGO ALFREDO
+    public Jugador(TiledMap mapa,World m) {
 
-    public Jugador(int x, int y, float anchoJugador, float largoJugador,TiledMap mapa,World m) {
-        this.x = x;
-        this.y = y;
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
-        colisiones=new Colisiones();
-        mapaInicial=new Mapa1();
-        colisiones.checkCollision(mapaInicial.getMap(),this);
+
         mundo=m;
         texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
         this.sprite = new Sprite(texture);
         this.camara = camara;
         shapeRenderer=new ShapeRenderer();
-        posicionTiles=this.camara.position;
+
         batch=new SpriteBatch();
         this.mapa=mapa;
         anchuraMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         alturaMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         anchuraMapaPixels=anchuraMapaTiles*(int)mapa.getProperties().get("width");
         alturaMapaPixels=alturaMapaTiles*(int)mapa.getProperties().get("height");
-        sprite.setPosition(23,23);
+        sprite.setPosition(250,250);
     }
 
     public void dibujar(){
@@ -82,14 +81,7 @@ public class Jugador extends Actor {
      * el tamaño de la propia textura del jugador, y el zoom actual. Debería llamarse
      * en dibujar.
      */
-    private void ajustarACamara(){
-        sprite.setSize(
-                ((Gdx.graphics.getWidth()*sprite.getTexture().getWidth())
-                        /anchuraMapaPixels)*(1/camara.zoom)*5,
-                ((Gdx.graphics.getHeight()*sprite.getTexture().getHeight())
-                        /alturaMapaPixels)
-                        *(1/camara.zoom)*5);
-    }
+
     public Rectangle getHitBox(){
         return sprite.getBoundingRectangle();
     }
@@ -159,7 +151,6 @@ public class Jugador extends Actor {
                 }
                 break;
         }
-        camara.update();
     }
 
     public OrthographicCamera getCamara(){
