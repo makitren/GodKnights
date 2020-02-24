@@ -33,10 +33,11 @@ public class Mapa1 extends BaseScreen {
     public Mapa1(Juego g){
         super(g);
         this.juego=g;
-
+        //world=new World(new Vector2(0,-9.8f),true);
         pantalla=new Stage(new FillViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
         manager = new AssetManager();
         manager.setLoader(TiledMap.class, new TmxMapLoader());
+        camera=new OrthographicCamera(640.f,480.f);
         manager.load("InteriorCasaInicialFinal.tmx", TiledMap.class);
         manager.finishLoading();
         map = manager.get("InteriorCasaInicialFinal.tmx", TiledMap.class);
@@ -46,13 +47,13 @@ public class Mapa1 extends BaseScreen {
         mapWidthInTiles = properties.get("width", Integer.class);
         mapHeightInTiles = properties.get("height", Integer.class);
 
-        jugador=new Jugador(map,world);
-        //camera=new OrthographicCamera(640.f,480.f);
+        jugador=new Jugador(map,world,camera);
+        System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
+        System.out.println(mapHeightInTiles);
         jugador.setPosition(250,250);
+        this.debugRenderer=new Box2DDebugRenderer();
 
-
-        camera = new OrthographicCamera(640.f,480.f); //Declaramos la cámara a través de la que veremos el mundo
-        camera.zoom=0.1f; //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
+       camera.zoom=0.1f; //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
 
@@ -121,7 +122,7 @@ show() Invocado en el momento en que esta Screen pasa a ser la actual
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.setDebugAll(true);
         camera.update();
-       // debugRenderer.render(world,camera.combined);
+        //debugRenderer.render(world,camera.combined);
     }
 
     @Override

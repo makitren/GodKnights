@@ -49,23 +49,26 @@ public class Jugador extends Actor {
     private Rectangle[]rectangles;
     private Colisiones colisiones;
 //int x, int y, float anchoJugador, float largoJugador,        ESTO VA EN EL CONSTRUCTOR CUANDO VAYA A EMPEZAR EL JUEGO ALFREDO
-    public Jugador(TiledMap mapa,World m) {
+    public Jugador(TiledMap mapa,World m, OrthographicCamera c) {
 
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
 
         mundo=m;
         texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
         this.sprite = new Sprite(texture);
-        this.camara = camara;
+        this.camara = c;
         shapeRenderer=new ShapeRenderer();
-
+        posicionTiles=new Vector3();
+        //POSICION TILES ES LO QUE DA PROBLEMA, NO LO DETECTA
         batch=new SpriteBatch();
         this.mapa=mapa;
         anchuraMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         alturaMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         anchuraMapaPixels=anchuraMapaTiles*(int)mapa.getProperties().get("width");
         alturaMapaPixels=alturaMapaTiles*(int)mapa.getProperties().get("height");
-        sprite.setPosition(250,250);
+        //sprite.setPosition(250,250);
+        sprite.setBounds(250,8-0,40,40);
+        //x e y es donde aparece el personaje, width y height altura y anchura
     }
 
     public void dibujar(){
