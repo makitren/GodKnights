@@ -33,6 +33,7 @@ public class Mapa1 extends BaseScreen {
     public Mapa1(Juego g){
         super(g);
         this.juego=g;
+        world=new World(new Vector2(0,-9.8f),true);
         //world=new World(new Vector2(0,-9.8f),true);
         pantalla=new Stage(new FillViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
         manager = new AssetManager();
@@ -47,11 +48,11 @@ public class Mapa1 extends BaseScreen {
         mapWidthInTiles = properties.get("width", Integer.class);
         mapHeightInTiles = properties.get("height", Integer.class);
 
-        jugador=new Jugador(map,world,camera);
+        jugador=new Jugador(map,world,camera,280,40);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
-        jugador.setPosition(250,250);
-        this.debugRenderer=new Box2DDebugRenderer();
+        //
+        debugRenderer=new Box2DDebugRenderer();
 
        camera.zoom=0.1f; //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
@@ -60,15 +61,21 @@ public class Mapa1 extends BaseScreen {
         camera.setToOrtho(false, WIDTH,HEIGHT); //Establecemos la cámara, y le decimos cuanto tiene que ocupar. Doc:
         camera.position.x=WIDTH/2;
         camera.position.y=HEIGHT/2;
+
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
+
         camera = new OrthographicCamera(mapWidthInPixels, mapHeightInPixels);
         camera.position.x = mapWidthInPixels / 2f;
         camera.position.y = mapHeightInPixels / 2f;
+
         renderer = new OrthogonalTiledMapRenderer(map);
+
         MapLayers mapLayers = map.getLayers();
+
         terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
+
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
@@ -108,7 +115,7 @@ show() Invocado en el momento en que esta Screen pasa a ser la actual
         //limpia el fondo de pantalla con el color indicado
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //indica los elementos que se meten en el batch
-        renderer.setView(camera); //Establecemos la vista del mundo a través de la cámara.
+         //Establecemos la vista del mundo a través de la cámara.
         //camera.update();
         //renderer.render(); //Renderizamos la vista
         super.render(delta);
@@ -119,10 +126,14 @@ show() Invocado en el momento en que esta Screen pasa a ser la actual
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
+        /*
         pantalla.act(Gdx.graphics.getDeltaTime());
+
+        */
         pantalla.setDebugAll(true);
         camera.update();
-        //debugRenderer.render(world,camera.combined);
+        renderer.setView(camera);
+        debugRenderer.render(world,camera.combined);
     }
 
     @Override

@@ -27,7 +27,7 @@ import actores.Actores;
 import actores.Colisiones;
 
 public class Jugador extends Actor {
-    float x,y;
+
     private Juego juego;
     private Sprite sprite;
     private Texture texture;
@@ -49,10 +49,8 @@ public class Jugador extends Actor {
     private Rectangle[]rectangles;
     private Colisiones colisiones;
 //int x, int y, float anchoJugador, float largoJugador,        ESTO VA EN EL CONSTRUCTOR CUANDO VAYA A EMPEZAR EL JUEGO ALFREDO
-    public Jugador(TiledMap mapa,World m, OrthographicCamera c) {
-
+    public Jugador(TiledMap mapa,World m, OrthographicCamera c,int posicionPersonajeX, int posicionPersonajeY) {
         this.setSize(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
-
         mundo=m;
         texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
         this.sprite = new Sprite(texture);
@@ -61,22 +59,22 @@ public class Jugador extends Actor {
         posicionTiles=new Vector3();
         //POSICION TILES ES LO QUE DA PROBLEMA, NO LO DETECTA
         batch=new SpriteBatch();
-        this.mapa=mapa;
         anchuraMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         alturaMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
+
+        System.out.println(sprite.getX());
+        System.out.println(sprite.getY());
         anchuraMapaPixels=anchuraMapaTiles*(int)mapa.getProperties().get("width");
         alturaMapaPixels=alturaMapaTiles*(int)mapa.getProperties().get("height");
         //sprite.setPosition(250,250);
-        sprite.setBounds(250,8-0,40,40);
+        sprite.setBounds(posicionPersonajeX,posicionPersonajeY,40,40);
         //x e y es donde aparece el personaje, width y height altura y anchura
     }
-
     public void dibujar(){
-        batch.begin();
-        sprite.draw(batch);
-        batch.end();
-        checkCollision(this);
         dibujarConHitbox();
+       checkCollision(this);
+        camara.update();
+
     }
 
     /**
@@ -92,23 +90,22 @@ public class Jugador extends Actor {
     public void dibujarConHitbox(){
 
         batch.begin();
+        sprite.draw(batch);
+        batch.end();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
+     /*
       if(this.colliding){
           shapeRenderer.setColor(Color.RED);
       }else{
           shapeRenderer.setColor(Color.BLUE);
       }
-        sprite.draw(batch);
+      */
         shapeRenderer.end();
-        batch.end();
+
     }
-
-
     public boolean checkCollision(Jugador c){
         boolean overlaps=getHitBox().overlaps(c.getHitBox());
-
-
         if(overlaps&&colliding==false){
             colliding=true;
             Gdx.app.log("Colisionando","con "+c.getClass().getName());
@@ -136,13 +133,13 @@ public class Jugador extends Actor {
                 //moviendo el mapa para hacer parecer que el personaje se mueve.
                 break;
             case 'd':
-                if(posicionTiles.y>0) {
+                if(posicionTiles.y<this.alturaMapaTiles-1) {
                     sprite.setPosition(sprite.getX(), sprite.getY()-10);
                     System.out.println(sprite.getX()+""+sprite.getY());
                 }
                 break;
             case 'l':
-                if(posicionTiles.x>0) {
+                if(posicionTiles.x<this.anchuraMapaTiles-1) {
                     sprite.setPosition(sprite.getX()-10, sprite.getY());
                     System.out.println(sprite.getX()+""+sprite.getY());
                 }
