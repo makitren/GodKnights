@@ -16,6 +16,7 @@ public class Colisiones {
         jugador=new Rectangle();
         jugador.set(personaje.getX(),personaje.getY(),personaje.getWidth(),personaje.getHeight());
         MapObjects mons = map.getLayers().get("Colisionables").getObjects();
+       // MapObjects mons2 = map.getLayers().get("Entrada").getObjects();
         actores=new Actor[mons.getCount()];
         rect=new Rectangle[mons.getCount()];
         for (int i = 0;i < mons.getCount(); i++) {

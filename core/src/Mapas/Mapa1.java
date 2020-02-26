@@ -55,8 +55,7 @@ public class Mapa1 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
 
         camera = new OrthographicCamera(mapWidthInPixels, mapHeightInPixels);
-
-        jugador=new Jugador(map,camera,280,40);
+        jugador=new Jugador(map,camera,280,40,mapWidthInPixels/20 ,mapHeightInPixels/20 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //
@@ -84,21 +83,19 @@ public class Mapa1 extends BaseScreen {
         colisiones=new Colisiones();
         colisiones.checkCollision(map,jugador);
 
-        pantalla=new Stage();
-        pantalla.setDebugAll(true);
-        pantalla.addActor(jugador);
-
-
-        for(int b=0;b<colisiones.getActores().length-1;b++){
-            pantalla.addActor(colisiones.getActores()[b]);
-        }
-
-
-
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
+
+        pantalla=new Stage();
+        pantalla.setDebugAll(true);
+        pantalla.addActor(jugador);
+
+        for(int b=0;b<colisiones.getActores().length-1;b++){
+            pantalla.addActor(colisiones.getActores()[b]);
+
+        }
     }
 
     public OrthographicCamera getCamera() {
@@ -142,19 +139,17 @@ show() Invocado en el momento en que esta Screen pasa a ser la actual
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
         renderer.getBatch().end();
-        jugador.dibujar();
+        jugador.dibujarConHitbox();
 
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
-        /*
-        pantalla.act(Gdx.graphics.getDeltaTime());
-
-        */
-        camera.update();
         renderer.setView(camera);
+        //camera.update();
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();
+
+
     }
 
     @Override

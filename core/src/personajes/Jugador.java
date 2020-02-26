@@ -28,14 +28,11 @@ import actores.Colisiones;
 
 public class Jugador extends Actor {
     private int x,y;
-    private Juego juego;
     private Sprite sprite;
+    private Boolean colliding;
     private Texture texture;
-    private World mundo;
-    private Mapa1 mapa1;
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
-    protected boolean colliding;
     private ShapeRenderer shapeRenderer;
     private Batch batch;// La uso para dibujar en este batch al jugador. Podría pasarlo por constructor. Es decisión nuestra como programadoeres.
     private Boolean colision;
@@ -48,12 +45,15 @@ public class Jugador extends Actor {
     private Rectangle rectangle;
     private Rectangle[]rectangles;
     private Colisiones colisiones;
-//int x, int y, float anchoJugador, float largoJugador,        ESTO VA EN EL CONSTRUCTOR CUANDO VAYA A EMPEZAR EL JUEGO ALFREDO
-    public Jugador(TiledMap mapa, OrthographicCamera c,int posicionPersonajeX, int posicionPersonajeY) {
+     float anchoJugador, largoJugador;
+    public Jugador(TiledMap mapa, OrthographicCamera c,int posicionPersonajeX, int posicionPersonajeY, float anchoJugador, float largoJugador) {
         this.x=posicionPersonajeX;
         this.y=posicionPersonajeY;
+        this.anchoJugador=anchoJugador;
+        this.largoJugador=largoJugador;
         texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
         this.sprite = new Sprite(texture);
+        colliding=new Boolean(false);
         this.camara = c;
         colisiones=new Colisiones();
         colisiones.checkCollision(mapa,this);
@@ -69,16 +69,10 @@ public class Jugador extends Actor {
         anchuraMapaPixels=anchuraMapaTiles*(int)mapa.getProperties().get("width");
         alturaMapaPixels=alturaMapaTiles*(int)mapa.getProperties().get("height");
         //sprite.setPosition(250,250);
-        sprite.setBounds(posicionPersonajeX,posicionPersonajeY,40,40);
+        sprite.setBounds(posicionPersonajeX,posicionPersonajeY,anchoJugador,largoJugador);
         //x e y es donde aparece el personaje, width y height altura y anchura
     }
-    public void dibujar(){
 
-        dibujarConHitbox();
-        camara.update();
-
-
-    }
 
     /**
      * Esta función redimensiona el sprite del jugador según el tamaño del mapa,
@@ -94,17 +88,18 @@ public class Jugador extends Actor {
 
         batch.begin();
         sprite.draw(batch);
+        getHitBox();
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
-     /*
+
       if(this.colliding){
           shapeRenderer.setColor(Color.RED);
       }else{
           shapeRenderer.setColor(Color.BLUE);
       }
-      */
+
         shapeRenderer.end();
 
     }
@@ -117,34 +112,30 @@ public class Jugador extends Actor {
     public void mover(char direccion){
         switch (direccion){
             case 'u':
-               /*
                 //Cambio posición del jugador, todavía no cambia nada visualmente
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+10,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        System.out.println(colision);
                         break;
                     }else{
                         colision=false;
+                        System.out.println(colision);
                     }
                 }
                 if(colision==false){
-                    y=y+10;
+                    sprite.setPosition(sprite.getX(), sprite.getY()+10);
                 }
-    */
-
+/*
                 if(posicionTiles.y<this.alturaMapaTiles-1) {
                     sprite.setPosition(sprite.getX(), sprite.getY()+10);
                     System.out.println(sprite.getX()+""+sprite.getY());
                 }
-
-                //Pongo la cámara donde esté el jugador, para que siempre quede centrado en el tile en que está
-                //Recuerdo que el jugador no está de verdad en el tile: El dibujado
-                //del sprite es independiente del dibujado del mapa, y solo estamos
-                //moviendo el mapa para hacer parecer que el personaje se mueve.
+ */
                 break;
             case 'd':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y-9,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y-10,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         break;
                     }else{
@@ -152,12 +143,12 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    y=y-10;
+                    sprite.setPosition(sprite.getX(), sprite.getY()-10);
                 }
                 break;
             case 'l':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x-9,y,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x-10,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         break;
                     }else{
@@ -165,20 +156,22 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    x=x-10;
+                    sprite.setPosition(sprite.getX()-10, sprite.getY());
                 }
                 break;
             case 'r':
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+9,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        System.out.println(colision);
                         break;
                     }else{
                         colision=false;
+                        System.out.println(colision);
                     }
                 }
                 if(colision==false){
-                    x=x+10;
+                    sprite.setPosition(sprite.getX()+10, sprite.getY());
                 }
                 break;
         }
