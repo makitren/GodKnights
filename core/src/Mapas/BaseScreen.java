@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Actores;
+import actores.Colisiones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -41,15 +43,18 @@ public class BaseScreen implements Screen {
             mapWidthInPixels, mapHeightInPixels;
     protected OrthographicCamera camera;
     protected Jugador jugador;
-    public static final float unitScale = 1 / 32f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
+    public static final float unitScale = 1 / 16f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
     public static final float pixelsPorCuadro=32f;
-    protected Box2DDebugRenderer debugRenderer;
     protected OrthogonalTiledMapRenderer renderer;
+    protected ShapeRenderer shapeRenderer;
     protected TiledMapTileLayer terrainLayer,terrainLayer2,terrainLayer3;
+    protected Colisiones colisiones;
 
 
     public BaseScreen(Juego g){
+
         game=g;
+
     }
     @Override
     public void show() {
@@ -88,15 +93,5 @@ public class BaseScreen implements Screen {
         renderer.dispose();
         pantalla.dispose();
     }
-    private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
-        Rectangle rectangle = rectangleObject.getRectangle();
-        PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) /pixelsPorCuadro,
-                (rectangle.y + rectangle.height * 0.5f ) / pixelsPorCuadro);
-        polygon.setAsBox(rectangle.width * 0.5f /pixelsPorCuadro,
-                rectangle.height * 0.5f / pixelsPorCuadro,
-                size,
-                0.0f);
-        return polygon;
-    }
+
 }

@@ -109,15 +109,5 @@ public class Mapa2 extends BaseScreen {
     public TiledMap getMap() {
         return map;
     }
-    private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
-        Rectangle rectangle = rectangleObject.getRectangle();
-        PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) /pixelsPorCuadro,
-                (rectangle.y + rectangle.height * 0.5f ) / pixelsPorCuadro);
-        polygon.setAsBox(rectangle.width * 0.5f /pixelsPorCuadro,
-                rectangle.height * 0.5f / pixelsPorCuadro,
-                size,
-                0.0f);
-        return polygon;
-    }
+
 }

@@ -22,7 +22,7 @@ public class Colisiones {
             RectangleMapObject obj1 = (RectangleMapObject) mons.get(i);
             Rectangle rect1 = obj1.getRectangle();
             rect[i]=rect1;
-            rect[i].set(rect1.x*2f,rect1.y*2,rect1.width*2f,rect1.height*2);
+            rect[i].set(rect1.x,rect1.y,rect1.width,rect1.height);
             actores[i]=new Actor();
             actores[i].setBounds(rect1.x,rect1.y,rect1.width,rect1.height);
         }

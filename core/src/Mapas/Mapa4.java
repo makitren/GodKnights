@@ -50,17 +50,7 @@ public class Mapa4 extends BaseScreen {
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
     }
-    private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
-        Rectangle rectangle = rectangleObject.getRectangle();
-        PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) /pixelsPorCuadro,
-                (rectangle.y + rectangle.height * 0.5f ) / pixelsPorCuadro);
-        polygon.setAsBox(rectangle.width * 0.5f /pixelsPorCuadro,
-                rectangle.height * 0.5f / pixelsPorCuadro,
-                size,
-                0.0f);
-        return polygon;
-    }
+
 
     public void renderSuelos() {
         renderer.setView(camera);
