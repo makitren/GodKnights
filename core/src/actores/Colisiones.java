@@ -1,5 +1,6 @@
 package actores;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -24,8 +25,12 @@ public class Colisiones {
             Rectangle rect1 = obj1.getRectangle();
             rect[i]=rect1;
             rect[i].set(rect1.x,rect1.y,rect1.width,rect1.height);
+
+
             actores[i]=new Actor();
             actores[i].setBounds(rect1.x,rect1.y,rect1.width,rect1.height);
+            actores[i].setColor(Color.BLUE);
+
         }
     }
 
@@ -34,6 +39,7 @@ public class Colisiones {
     }
 
     public Rectangle[] getRect() {
+
         return rect;
     }
 }

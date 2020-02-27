@@ -38,7 +38,6 @@ public class Jugador extends Actor {
 
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
-    private ShapeRenderer shapeRenderer;
     private Batch batch;// La uso para dibujar en este batch al jugador. Podría pasarlo por constructor. Es decisión nuestra como programadoeres.
     private Boolean colision;
     //Variables para poder redimensionar al jugador según el zoom
@@ -64,7 +63,6 @@ public class Jugador extends Actor {
         colisiones.checkCollision(mapa,this);
         rectangles=colisiones.getRect();
         rectangle=new Rectangle(posicionPersonajeX,posicionPersonajeY,texture.getWidth(),texture.getHeight());
-        shapeRenderer=new ShapeRenderer();
         posicionTiles=new Vector3();
         batch=new SpriteBatch();
         anchuraMapaTiles = ((TiledMapTileLayer) mapa.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
@@ -101,7 +99,7 @@ public class Jugador extends Actor {
 
         tiempo += Gdx.graphics.getDeltaTime();
         textureRegion = (TextureRegion) animation.getKeyFrame(tiempo, true);
-        setBounds(x,y,anchoJugador-1,largoJugador-10);
+        setBounds(x,y,anchoJugador-1,largoJugador-5);
         batch.draw(textureRegion, x, y,anchoJugador,largoJugador);
 
 
