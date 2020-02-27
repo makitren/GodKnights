@@ -130,8 +130,9 @@ public class Mapa1 extends BaseScreen {
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
         renderer.getBatch().end();
-        jugador.dibujarConHitbox();
-
+        batch.begin();
+        jugador.dibujarConHitbox(batch);
+        batch.end();
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();

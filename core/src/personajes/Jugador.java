@@ -27,14 +27,14 @@ public class Jugador extends Actor {
     private Sprite sprite;
     private Boolean colliding;
     private Texture texture;
-   /*
+
     private Animation animation;
     private TextureRegion textureRegion;
     private TextureRegion[][] tmp;
     private String jugadorVista;
     private float tiempo;
     private TextureRegion[] regions;
-*/
+
 
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
@@ -56,7 +56,7 @@ public class Jugador extends Actor {
         this.y=posicionPersonajeY;
         this.anchoJugador=anchoJugador;
         this.largoJugador=largoJugador;
-        texture=new Texture(Gdx.files.internal("Sprites/playerFemale.png"));
+        texture=new Texture(Gdx.files.internal("Sprites/gfx/character.png"));
         this.sprite = new Sprite(texture);
         colliding=new Boolean(false);
         this.camara = c;
@@ -76,6 +76,14 @@ public class Jugador extends Actor {
         //sprite.setPosition(250,250);
         sprite.setBounds(posicionPersonajeX,posicionPersonajeY,anchoJugador,largoJugador);
         //x e y es donde aparece el personaje, width y height altura y anchura
+       jugadorVista="";
+        tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
+        regions = new TextureRegion[4];
+        for (int b = 0; b < regions.length; b++) {
+            regions[b] = tmp[0][0];
+            animation = new Animation((float) 0.2, regions);
+            tiempo = 0f;
+        }
     }
 
 
@@ -89,23 +97,14 @@ public class Jugador extends Actor {
         return sprite.getBoundingRectangle();
     }
 
-    public void dibujarConHitbox(){
+    public void dibujarConHitbox( SpriteBatch batch){
 
-        batch.begin();
-        sprite.draw(batch);
-        getHitBox();
-        batch.end();
+        tiempo += Gdx.graphics.getDeltaTime();
+        textureRegion = (TextureRegion) animation.getKeyFrame(tiempo, true);
+        setBounds(x,y,anchoJugador-1,largoJugador-10);
+        batch.draw(textureRegion, x, y,anchoJugador,largoJugador);
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
 
-      if(this.colliding){
-          shapeRenderer.setColor(Color.RED);
-      }else{
-          shapeRenderer.setColor(Color.BLUE);
-      }
-
-        shapeRenderer.end();
 
     }
 
@@ -119,7 +118,7 @@ public class Jugador extends Actor {
             case 'u':
                 //Cambio posición del jugador, todavía no cambia nada visualmente
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y+10,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y+7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
                         break;
@@ -129,44 +128,43 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    sprite.setPosition(sprite.getX(), sprite.getY()+10);
+                    y=y+7;
                 }
-/*
-                if(posicionTiles.y<this.alturaMapaTiles-1) {
-                    sprite.setPosition(sprite.getX(), sprite.getY()+10);
-                    System.out.println(sprite.getX()+""+sprite.getY());
-                }
- */
+
                 break;
             case 'd':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y-10,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x,y-7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        System.out.println(colision);
                         break;
                     }else{
                         colision=false;
+                        System.out.println(colision);
                     }
                 }
                 if(colision==false){
-                    sprite.setPosition(sprite.getX(), sprite.getY()-10);
+                    y=y-7;
                 }
                 break;
             case 'l':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x-10,y,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x-7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        System.out.println(colision);
                         break;
                     }else{
                         colision=false;
+                        System.out.println(colision);
                     }
                 }
                 if(colision==false){
-                    sprite.setPosition(sprite.getX()-10, sprite.getY());
+                    x=x-7;
                 }
                 break;
             case 'r':
                 for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x+9,y,sprite.getWidth(),sprite.getHeight()))){
+                    if(rectangles[b].overlaps(rectangle.set(x+7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
                         break;
@@ -176,12 +174,12 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    sprite.setPosition(sprite.getX()+10, sprite.getY());
+                    x=x+7;
                 }
                 break;
         }
     }
-    /*
+
      public void hacerAnimaciones(char letra) {
         switch (letra) {
             case 'd':
@@ -223,10 +221,10 @@ public class Jugador extends Actor {
 
 
     }
-     */
 
 
-    /*
+
+
      public void pararPersonaje(char letra) {
         switch (letra) {
             case 'd':
@@ -264,9 +262,9 @@ public class Jugador extends Actor {
         }
 
     }
-     */
 
-    /*
+
+
     public void pararJugador() {
         texture = new Texture(Gdx.files.internal("character.png"));
         tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
@@ -302,11 +300,6 @@ public class Jugador extends Actor {
                 break;
         }
     }
-     */
-
-
-
-
     public OrthographicCamera getCamara(){
         return camara;
     }
