@@ -4,21 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import java.util.ArrayList;
 
@@ -31,6 +27,15 @@ public class Jugador extends Actor {
     private Sprite sprite;
     private Boolean colliding;
     private Texture texture;
+   /*
+    private Animation animation;
+    private TextureRegion textureRegion;
+    private TextureRegion[][] tmp;
+    private String jugadorVista;
+    private float tiempo;
+    private TextureRegion[] regions;
+*/
+
     private OrthographicCamera camara; //La necesito para que me siga
     private Vector3 posicionTiles;
     private ShapeRenderer shapeRenderer;
@@ -176,6 +181,131 @@ public class Jugador extends Actor {
                 break;
         }
     }
+    /*
+     public void hacerAnimaciones(char letra) {
+        switch (letra) {
+            case 'd':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[1][b];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case 's':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[0][b];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case 'a':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[3][b];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case 'w':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[2][b];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case 'º':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[5][b];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+        }
+
+
+    }
+     */
+
+
+    /*
+     public void pararPersonaje(char letra) {
+        switch (letra) {
+            case 'd':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[1][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                    jugadorVista = "Derecha";
+                }
+                break;
+            case 's':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[0][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                    jugadorVista = "Abajo";
+                }
+                break;
+            case 'a':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[3][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                    jugadorVista = "Izquierda";
+                }
+                break;
+            case 'w':
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[2][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                    jugadorVista = "Arriba";
+                }
+                break;
+        }
+
+    }
+     */
+
+    /*
+    public void pararJugador() {
+        texture = new Texture(Gdx.files.internal("character.png"));
+        tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
+        regions = new TextureRegion[4];
+        switch (jugadorVista) {
+            case "Derecha":
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[1][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case "Izquierda":
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[3][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case "Abajo":
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[0][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+            case "Arriba":
+                for (int b = 0; b < regions.length; b++) {
+                    regions[b] = tmp[2][0];
+                    animation = new Animation((float) 0.2, regions);
+                    tiempo = 0f;
+                }
+                break;
+        }
+    }
+     */
+
+
+
 
     public OrthographicCamera getCamara(){
         return camara;

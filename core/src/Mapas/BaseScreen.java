@@ -43,7 +43,7 @@ public class BaseScreen implements Screen {
             mapWidthInPixels, mapHeightInPixels;
     protected OrthographicCamera camera;
     protected Jugador jugador;
-    public static final float unitScale = 1 / 16f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
+    public static final float unitScale = 1 / 32f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
     public static final float pixelsPorCuadro=32f;
     protected OrthogonalTiledMapRenderer renderer;
     protected ShapeRenderer shapeRenderer;

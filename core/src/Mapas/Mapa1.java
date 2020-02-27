@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapLayers;
@@ -37,15 +38,18 @@ import personajes.Jugador;
 
 public class Mapa1 extends BaseScreen {
     private Juego juego;
+    private SpriteBatch batch;
     public Mapa1(Juego g){
         super(g);
         this.juego=g;
         shapeRenderer=new ShapeRenderer();
-        pantalla=new Stage(new FillViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
+
 
         TiledMap map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-
+        renderer = new OrthogonalTiledMapRenderer(map,unitScale);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+        camera.update();
         MapProperties properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -53,24 +57,23 @@ public class Mapa1 extends BaseScreen {
         mapHeightInTiles = properties.get("height", Integer.class);
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
+        batch=new SpriteBatch();
 
-        camera = new OrthographicCamera(mapWidthInPixels, mapHeightInPixels);
         jugador=new Jugador(map,camera,280,40,mapWidthInPixels/20 ,mapHeightInPixels/20 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //
 
-       camera.zoom=pixelsPorCuadro; //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
+        //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
-
+        System.out.println(WIDTH);
+        System.out.println(HEIGHT);
         camera.setToOrtho(false, WIDTH,HEIGHT); //Establecemos la cámara, y le decimos cuanto tiene que ocupar. Doc:
+
         camera.position.x=WIDTH/2;
         camera.position.y=HEIGHT/2;
-
-
-        camera.position.x = mapWidthInPixels / 2f;
-        camera.position.y = mapHeightInPixels / 2f;
+        camera.position.set(WIDTH/2,HEIGHT/2,1);
 
 
 
@@ -87,7 +90,6 @@ public class Mapa1 extends BaseScreen {
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
-
         pantalla=new Stage();
         pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
@@ -96,6 +98,7 @@ public class Mapa1 extends BaseScreen {
             pantalla.addActor(colisiones.getActores()[b]);
 
         }
+        System.out.println(colisiones.getActores().length);
     }
 
     public OrthographicCamera getCamera() {
@@ -115,26 +118,14 @@ public class Mapa1 extends BaseScreen {
 
 
     }
-    /*
-dispose() Invocado cuando se liberan todos los recursos
-hide() Invocado cuando esta Screen ya no es la actual
-pause() Invocado cuando la Screen pasa a segundo plano
-render() Invocado como un bucle para renderizar la Screen actual
-resize() Invocado cuando se redimensiona la pantalla
-resume() Invocado cuando la Screenpasa a primer plano
-show() Invocado en el momento en que esta Screen pasa a ser la actual
- */
 
     @Override
     public void render(float delta) {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        //limpia el fondo de pantalla con el color indicado
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //indica los elementos que se meten en el batch
-         //Establecemos la vista del mundo a través de la cámara.
-        //camera.update();
-        //renderer.render(); //Renderizamos la vista
+
         super.render(delta);
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer);
@@ -144,10 +135,13 @@ show() Invocado en el momento en que esta Screen pasa a ser la actual
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
+
+
         renderer.setView(camera);
-        //camera.update();
+        camera.update();
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();
+
 
 
     }
