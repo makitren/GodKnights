@@ -16,47 +16,80 @@ public class TecladoJugador implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.UP:
-                jugador.mover('u');
+        switch (keycode) {
+            case Input.Keys.D:
+                jugador.hacerAnimaciones('d');
                 break;
-            case Input.Keys.DOWN:
-                jugador.mover('d');
+            case Input.Keys.S:
+                jugador.hacerAnimaciones('s');
                 break;
-            case Input.Keys.LEFT:
-                jugador.mover('l');
+            case Input.Keys.A:
+                jugador.hacerAnimaciones('a');
                 break;
-            case Input.Keys.RIGHT:
-                jugador.mover('r');
+            case Input.Keys.W:
+                jugador.hacerAnimaciones('w');
                 break;
-            case Input.Keys.MINUS:
-                if(jugador.getCamara().zoom<1) {
-                    jugador.getCamara().zoom+=0.1;
-                    jugador.getCamara().update();
-                }
+           /*
+            case Input.Keys.SPACE:
+                jugador.atacar();
                 break;
-            case Input.Keys.PLUS:
-                if(jugador.getCamara().zoom>0.5) {
-                    jugador.getCamara().zoom -= 0.1;
-                    jugador.getCamara().update();
-                }
-                break;
+            */
         }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode){
+            case Input.Keys.D:
+                jugador.pararPersonaje('d');
+                break;
+            case Input.Keys.S:
+                jugador.pararPersonaje('s');
+                break;
+            case Input.Keys.A:
+                jugador.pararPersonaje('a');
+                break;
+            case Input.Keys.W:
+                jugador.pararPersonaje('w');
+                break;
+            case 'f':
+                jugador.moverJugador('f');
+                break;
+            case Input.Keys.SPACE:
+                jugador.pararJugador();
+                break;
+
+        }
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
+        String letra=String.valueOf(character);
+       // System.out.println(keycode);
+        switch (letra.toLowerCase()){
+            case "w":
+                jugador.moverJugador('w');
+                break;
+            case "s":
+                jugador.moverJugador('s');
+                break;
+            case "a":
+                jugador.moverJugador('a');
+                break;
+            case "d":
+                jugador.moverJugador('d');
+                break;
+
+        }
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println(screenX+" y:"+screenY);
+
         return false;
     }
 

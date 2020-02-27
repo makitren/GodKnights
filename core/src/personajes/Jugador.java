@@ -113,9 +113,9 @@ public class Jugador extends Actor {
      * Mueve el jugador un tile en la dirección establecida
      * @param direccion 'u' -> arriba,'d' -> abajo,'l' -> izda, 'r' -> derecha
      */
-    public void mover(char direccion){
+    public void moverJugador(char direccion){
         switch (direccion){
-            case 'u':
+            case 'w':
                 //Cambio posición del jugador, todavía no cambia nada visualmente
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+7,sprite.getWidth(),sprite.getHeight()))){
@@ -132,7 +132,7 @@ public class Jugador extends Actor {
                 }
 
                 break;
-            case 'd':
+            case 's':
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y-7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
@@ -147,7 +147,7 @@ public class Jugador extends Actor {
                     y=y-7;
                 }
                 break;
-            case 'l':
+            case 'a':
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x-7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
@@ -162,7 +162,7 @@ public class Jugador extends Actor {
                     x=x-7;
                 }
                 break;
-            case 'r':
+            case 'd':
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
@@ -266,7 +266,7 @@ public class Jugador extends Actor {
 
 
     public void pararJugador() {
-        texture = new Texture(Gdx.files.internal("character.png"));
+        texture = new Texture(Gdx.files.internal("Sprites/gfx/character.png"));
         tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
         regions = new TextureRegion[4];
         switch (jugadorVista) {

@@ -59,7 +59,7 @@ public class Mapa1 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,280,40,mapWidthInPixels/20 ,mapHeightInPixels/20 );
+        jugador=new Jugador(map,camera,280,100,mapWidthInPixels/20 ,mapHeightInPixels/20 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //
