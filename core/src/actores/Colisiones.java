@@ -28,7 +28,7 @@ public class Colisiones {
 
 
             actores[i]=new Actor();
-            actores[i].setBounds(rect1.x,rect1.y,rect1.width,rect1.height);
+            actores[i].setBounds(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
             actores[i].setColor(Color.BLUE);
 
         }

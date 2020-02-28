@@ -2,8 +2,6 @@ package Mapas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,8 +17,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
-import actores.Actores;
 import actores.Colisiones;
+import actores.EntradaCasaInicial;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -28,18 +26,19 @@ import personajes.Jugador;
 public class Mapa1 extends BaseScreen {
     private Juego juego;
     private SpriteBatch batch;
+    private EntradaCasaInicial eci;
     public Mapa1(Juego g){
         super(g);
         this.juego=g;
         shapeRenderer=new ShapeRenderer();
 
 
-        TiledMap map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
+         map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
         camera.update();
-        MapProperties properties = map.getProperties();
+         properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
         mapWidthInTiles = properties.get("width", Integer.class);
@@ -48,10 +47,10 @@ public class Mapa1 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,280,100,mapWidthInPixels/20 ,mapHeightInPixels/20 );
+        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/5 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
-        //
+        //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
 
         //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
@@ -83,6 +82,8 @@ public class Mapa1 extends BaseScreen {
         pantalla=new Stage();
         pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
+        eci=new EntradaCasaInicial();
+        pantalla.addActor(eci);
 
 
         for(int b=0;b<colisiones.getActores().length-1;b++){
@@ -128,14 +129,11 @@ public class Mapa1 extends BaseScreen {
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
-
+        eci.dibujar();
         renderer.setView(camera);
 
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();
-
-
-
 
     }
 

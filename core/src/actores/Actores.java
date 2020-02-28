@@ -44,11 +44,11 @@ public class Actores extends Actor {
         sprite=new Sprite(new Texture(rutaTextura));
         dimensiones=new Rectangle((int)x,(int)y,(int)posAlt,(int)posAnc);
         batch=new SpriteBatch();
-        sprite.setBounds(x,y, 50,50);
-        this.setSize(Gdx.graphics.getWidth()*100,Gdx.graphics.getHeight()*100);
+        sprite.setBounds(x,y, x,y);
+        //this.setSize(Gdx.graphics.getWidth()*100,Gdx.graphics.getHeight()*100);
         sprite.setPosition(posAnc,posAlt);
-        this.setPosition(posAnc,posAlt); //Cambio posición del actor
-        this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
+        //Cambio posición del actor
+        //this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
         sprite.setOrigin(this.getOriginX(),this.getOriginY());
 
 
