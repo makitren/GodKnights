@@ -6,23 +6,25 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Colisiones;
 import actores.EntradaCasaInicial;
-import escuchadores.Botones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -31,6 +33,8 @@ public class Mapa1 extends BaseScreen {
     private Juego juego;
     private SpriteBatch batch;
     private EntradaCasaInicial eci;
+    private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
+    private TextureAtlas buttonAtlas;
     public Mapa1(Juego g){
         super(g);
         this.juego=g;
@@ -51,7 +55,7 @@ public class Mapa1 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/5 );
+        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/7 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -67,6 +71,78 @@ public class Mapa1 extends BaseScreen {
         camera.position.y=HEIGHT/2;
         camera.position.set(WIDTH/2,HEIGHT/2,1);
 
+        pantalla=new Stage(new ScreenViewport());
+
+
+
+        buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
+        Skin buttonSkin=new Skin();
+        buttonSkin.addRegions(buttonAtlas);
+        ImageButton.ImageButtonStyle miraArriba=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraAbajo=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraIzquierda=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraDerecha=new ImageButton.ImageButtonStyle();
+        miraArriba.up=buttonSkin.getDrawable("upRemastered");
+        miraAbajo.up=buttonSkin.getDrawable("downRemastered");
+        miraDerecha.up=buttonSkin.getDrawable("rightRemastered");
+        miraIzquierda.up=buttonSkin.getDrawable("leftRemastered");
+
+
+        botonArriba=new ImageButton(miraArriba);
+        botonAbajo=new ImageButton(miraAbajo);
+        botonIzquierda=new ImageButton(miraIzquierda);
+        botonDerecha=new ImageButton(miraDerecha);
+
+        botonArriba.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('w');
+                jugador.hacerAnimaciones('w');
+
+                return true;
+            }
+        });
+        botonAbajo.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('s');
+                jugador.hacerAnimaciones('s');
+
+                return true;
+            }
+        });
+        botonDerecha.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('d');
+                jugador.hacerAnimaciones('d');
+
+                return true;
+            }
+        });
+        botonIzquierda.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('a');
+                jugador.hacerAnimaciones('a');
+
+                return true;
+            }
+        });
+
+        tableBotones=new Table();
+        tableBotones.bottom();
+        tableBotones.debug();
+        tableBotones.setFillParent(true);
+        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        pantalla.addActor(tableBotones);
 
 
 
@@ -83,24 +159,14 @@ public class Mapa1 extends BaseScreen {
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
+        Gdx.input.setInputProcessor(pantalla);
 
 
-        pantalla=new Stage();
+
         pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
 
-        botonArriba=new Botones(jugador);
 
-
-
-
-        botonAbajo=new Botones.BotonAbajo(jugador);
-        botonIzquierda=new Botones.BotonIzquierda(jugador);
-        botonDerecha=new Botones.BotonDerecha(jugador);
-        pantalla.addActor(botonArriba);
-        pantalla.addActor(botonAbajo);
-        pantalla.addActor(botonIzquierda);
-        pantalla.addActor(botonDerecha);
         eci=new EntradaCasaInicial();
         pantalla.addActor(eci);
 
@@ -149,10 +215,7 @@ public class Mapa1 extends BaseScreen {
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
         eci.dibujar();
-        botonArriba.dibujarConHitbox();
-        botonAbajo.dibujarConHitbox();
-        botonIzquierda.dibujarConHitbox();
-        botonDerecha.dibujarConHitbox();
+
         renderer.setView(camera);
 
         pantalla.act(Gdx.graphics.getDeltaTime());

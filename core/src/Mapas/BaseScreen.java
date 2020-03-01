@@ -10,14 +10,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Actores;
 import actores.Colisiones;
-import escuchadores.Botones;
 import personajes.Jugador;
 
 public class BaseScreen implements Screen {
@@ -25,10 +23,7 @@ public class BaseScreen implements Screen {
     protected World world;
     protected Actores stage;
     protected Stage pantalla;
-    protected Botones botonArriba;
-    protected Botones.BotonAbajo botonAbajo;
-    protected Botones.BotonDerecha botonDerecha;
-    protected Botones.BotonIzquierda botonIzquierda;
+
     protected TiledMap map;
     protected static int WIDTH; //Aquí almacenaremos la anchura en tiles
     protected static int HEIGHT; //Aquí almacenaremos la altura en tiles
@@ -45,6 +40,7 @@ public class BaseScreen implements Screen {
     protected ShapeRenderer shapeRenderer;
     protected TiledMapTileLayer terrainLayer,terrainLayer2,terrainLayer3;
     protected Colisiones colisiones;
+    protected Table tableBotones;
 
 
     public BaseScreen(Juego g){

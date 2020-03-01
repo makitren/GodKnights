@@ -14,7 +14,7 @@ public class Juego extends Game {
     private BaseScreen pantallaActual;
 	@Override
 	public void create() {
-		this.setPantallaActual(new Mapa2(this));
+		this.setPantallaActual(new Mapa4(this));
 	}
 	public void setPantallaActual(BaseScreen pa){
 		pantallaActual=pa;

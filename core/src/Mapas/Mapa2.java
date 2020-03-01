@@ -1,40 +1,30 @@
 package Mapas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Colisiones;
 import actores.EntradaCasaMapa2;
 import actores.SalidaMapa2;
-import escuchadores.Botones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -43,12 +33,14 @@ public class Mapa2 extends BaseScreen {
     private SpriteBatch batch;
     private EntradaCasaMapa2 ecm;
     private SalidaMapa2 sm;
+    private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
+    private TextureAtlas buttonAtlas;
+
 
 
     public Mapa2(Juego g){
         super(g);
         this.juego=g;
-        shapeRenderer=new ShapeRenderer();
 
          map = new TmxMapLoader().load("Mapas/MapaInicialFinal.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
@@ -83,49 +75,115 @@ public class Mapa2 extends BaseScreen {
         terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
 
+
+        pantalla=new Stage(new ScreenViewport());
+
+
+
+
+        buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
+        Skin buttonSkin=new Skin();
+        buttonSkin.addRegions(buttonAtlas);
+        ImageButton.ImageButtonStyle miraArriba=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraAbajo=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraIzquierda=new ImageButton.ImageButtonStyle();
+        ImageButton.ImageButtonStyle miraDerecha=new ImageButton.ImageButtonStyle();
+        miraArriba.up=buttonSkin.getDrawable("upRemastered");
+        miraAbajo.up=buttonSkin.getDrawable("downRemastered");
+        miraDerecha.up=buttonSkin.getDrawable("rightRemastered");
+        miraIzquierda.up=buttonSkin.getDrawable("leftRemastered");
+
+
+        botonArriba=new ImageButton(miraArriba);
+        botonAbajo=new ImageButton(miraAbajo);
+        botonIzquierda=new ImageButton(miraIzquierda);
+        botonDerecha=new ImageButton(miraDerecha);
+
+        botonArriba.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                    jugador.moverJugador('w');
+                    jugador.hacerAnimaciones('w');
+
+                return true;
+            }
+        });
+        botonAbajo.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('s');
+                jugador.hacerAnimaciones('s');
+
+                return true;
+            }
+        });
+        botonDerecha.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('d');
+                jugador.hacerAnimaciones('d');
+
+                return true;
+            }
+        });
+        botonIzquierda.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+
+                jugador.moverJugador('a');
+                jugador.hacerAnimaciones('a');
+
+                return true;
+            }
+        });
+
+        tableBotones=new Table();
+        tableBotones.bottom();
+        tableBotones.debug();
+        tableBotones.setFillParent(true);
+        tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
+        pantalla.addActor(tableBotones);
+
+
+
+
         colisiones=new Colisiones();
         colisiones.checkCollision(map,jugador);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
+        multiplexer.addProcessor(pantalla);
         Gdx.input.setInputProcessor(multiplexer);
-
-        pantalla=new Stage();
         Gdx.input.setInputProcessor(pantalla);
+
         pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
-        botonArriba=new Botones(jugador);
-        botonAbajo=new Botones.BotonAbajo(jugador);
-        botonIzquierda=new Botones.BotonIzquierda(jugador);
-        botonDerecha=new Botones.BotonDerecha(jugador);
+
         ecm=new EntradaCasaMapa2();
         sm=new SalidaMapa2();
 
-        pantalla.addActor(botonArriba);
-        botonArriba.setTouchable(Touchable.enabled);
-        pantalla.addActor(botonAbajo);
-        pantalla.addActor(botonIzquierda);
-        pantalla.addActor(botonDerecha);
+
         pantalla.addActor(ecm);
         pantalla.addActor(sm);
 
 
+        //botonArriba.setBounds(Gdx.graphics.getWidth() / 18.9666f, Gdx.graphics.getHeight() / 6.4f, Gdx.graphics.getWidth() / 11, Gdx.graphics.getHeight() / 11);
 
-        botonArriba.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                jugador.moverJugador('w');
-            }
-        });
 
 
 
         for(int b=0;b<colisiones.getActores().length-1;b++){
             pantalla.addActor(colisiones.getActores()[b]);
-            colisiones.getActores()[b].setColor(Color.BLUE);
 
         }
         System.out.println(colisiones.getActores().length);
+
 
     }
 
@@ -156,10 +214,7 @@ public class Mapa2 extends BaseScreen {
         renderer.getBatch().end();
         ecm.dibujar();
         sm.dibujar();
-        botonArriba.dibujarConHitbox();
-        botonAbajo.dibujarConHitbox();
-        botonIzquierda.dibujarConHitbox();
-        botonDerecha.dibujarConHitbox();
+
         renderer.setView(camera);
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();
@@ -194,5 +249,6 @@ public class Mapa2 extends BaseScreen {
     public TiledMap getMap() {
         return map;
     }
+
 
 }

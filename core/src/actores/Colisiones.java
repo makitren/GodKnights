@@ -23,7 +23,8 @@ public class Colisiones {
         for (int i = 0;i < mons.getCount(); i++) {
             RectangleMapObject obj1 = (RectangleMapObject) mons.get(i);
             Rectangle rect1 = obj1.getRectangle();
-            rect[i]=new Rectangle((rect1.x*400)/1024,(rect1.y*400)/768,(rect1.width*400)/1024,(rect1.height*400)/768);
+            rect[i]=new Rectangle((rect1.x*2),(rect1.y*2),(rect1.width*2),(rect1.height*2));
+
             /*
             rect[i]=rect1;
             rect[i].set(rect1.x,rect1.y,rect1.width,rect1.height);
@@ -33,7 +34,7 @@ public class Colisiones {
 
             actores[i]=new Actor();
             actores[i].setBounds(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
-            actores[i].setColor(Color.BLUE);
+            //actores[i].setColor(Color.BLUE);
 
         }
     }

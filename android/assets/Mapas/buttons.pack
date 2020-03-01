@@ -1,0 +1,33 @@
+
+buttons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+downRemastered
+  rotate: false
+  xy: 1, 1
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+leftRemastered
+  rotate: false
+  xy: 19, 1
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+rightRemastered
+  rotate: false
+  xy: 37, 1
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1
+upRemastered
+  rotate: false
+  xy: 55, 1
+  size: 16, 17
+  orig: 16, 17
+  offset: 0, 0
+  index: -1

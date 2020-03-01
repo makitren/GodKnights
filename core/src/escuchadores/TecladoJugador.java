@@ -66,23 +66,23 @@ public class TecladoJugador implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
-        String letra=String.valueOf(character);
-       // System.out.println(keycode);
-        switch (letra.toLowerCase()){
-            case "w":
-                jugador.moverJugador('w');
-                break;
-            case "s":
-                jugador.moverJugador('s');
-                break;
-            case "a":
-                jugador.moverJugador('a');
-                break;
-            case "d":
-                jugador.moverJugador('d');
-                break;
+            String letra=String.valueOf(character);
+            // System.out.println(keycode);
+            switch (letra.toLowerCase()){
+                case "w":
+                    jugador.moverJugador('w');
+                    break;
+                case "s":
+                    jugador.moverJugador('s');
+                    break;
+                case "a":
+                    jugador.moverJugador('a');
+                    break;
+                case "d":
+                    jugador.moverJugador('d');
+                    break;
 
-        }
+            }
         return false;
     }
 
