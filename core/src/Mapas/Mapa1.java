@@ -14,11 +14,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Colisiones;
 import actores.EntradaCasaInicial;
+import escuchadores.Botones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -79,9 +83,24 @@ public class Mapa1 extends BaseScreen {
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
+
+
         pantalla=new Stage();
         pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
+
+        botonArriba=new Botones(jugador);
+
+
+
+
+        botonAbajo=new Botones.BotonAbajo(jugador);
+        botonIzquierda=new Botones.BotonIzquierda(jugador);
+        botonDerecha=new Botones.BotonDerecha(jugador);
+        pantalla.addActor(botonArriba);
+        pantalla.addActor(botonAbajo);
+        pantalla.addActor(botonIzquierda);
+        pantalla.addActor(botonDerecha);
         eci=new EntradaCasaInicial();
         pantalla.addActor(eci);
 
@@ -130,6 +149,10 @@ public class Mapa1 extends BaseScreen {
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
         eci.dibujar();
+        botonArriba.dibujarConHitbox();
+        botonAbajo.dibujarConHitbox();
+        botonIzquierda.dibujarConHitbox();
+        botonDerecha.dibujarConHitbox();
         renderer.setView(camera);
 
         pantalla.act(Gdx.graphics.getDeltaTime());
@@ -158,7 +181,6 @@ public class Mapa1 extends BaseScreen {
     }
 
     public void dispose() {
-        manager.dispose();
         jugador.dispose();
         renderer.dispose();
         pantalla.dispose();

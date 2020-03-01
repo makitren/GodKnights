@@ -19,13 +19,21 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.alfredomolinacalderon.Juego;
+
+
 
 import actores.Colisiones;
 import actores.EntradaCasaInicial;
 import actores.EntradaMapa4;
 import actores.SalidaMapa4;
+import escuchadores.Botones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -39,7 +47,6 @@ public class Mapa4 extends BaseScreen {
         super(g);
         this.juego=g;
         shapeRenderer=new ShapeRenderer();
-
         map = new TmxMapLoader().load("Mapas/Mazmorra1Final.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -54,7 +61,7 @@ public class Mapa4 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,100,100,mapWidthInPixels/10 ,mapHeightInPixels/5 );
+        jugador=new Jugador(map,camera,100,500,mapWidthInPixels/10 ,mapHeightInPixels/5 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -70,9 +77,6 @@ public class Mapa4 extends BaseScreen {
         camera.position.y=HEIGHT/2;
         camera.position.set( camera.position.x,camera.position.y,1);
 
-
-
-
         MapLayers mapLayers = map.getLayers();
 
         terrainLayer = (TiledMapTileLayer) mapLayers.get("suelo");
@@ -82,17 +86,32 @@ public class Mapa4 extends BaseScreen {
         colisiones=new Colisiones();
         colisiones.checkCollision(map,jugador);
 
-
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(multiplexer);
+
+
+
         pantalla=new Stage();
-        pantalla.setDebugAll(true);
+        Gdx.input.setInputProcessor(pantalla);
         pantalla.addActor(jugador);
         em=new EntradaMapa4();
         sm=new SalidaMapa4();
+
+
+        botonArriba=new Botones(jugador);
+        botonAbajo=new Botones.BotonAbajo(jugador);
+        botonIzquierda=new Botones.BotonIzquierda(jugador);
+        botonDerecha=new Botones.BotonDerecha(jugador);
+        pantalla.addActor(botonArriba);
+        pantalla.addActor(botonAbajo);
+        pantalla.addActor(botonIzquierda);
+        pantalla.addActor(botonDerecha);
         pantalla.addActor(em);
         pantalla.addActor(sm);
+        pantalla.setDebugAll(true);
+
+
 
 
         for(int b=0;b<colisiones.getActores().length-1;b++){
@@ -102,7 +121,16 @@ public class Mapa4 extends BaseScreen {
         }
 
         System.out.println(colisiones.getActores().length);
+
+      botonArriba.addListener(new ChangeListener() {
+          @Override
+          public void changed(ChangeEvent event, Actor actor) {
+              System.out.println("hola");
+          }
+      });
+
     }
+
 
 
 
@@ -141,6 +169,10 @@ public class Mapa4 extends BaseScreen {
         renderer.getBatch().end();
         em.dibujar();
         sm.dibujar();
+        botonArriba.dibujarConHitbox();
+        botonAbajo.dibujarConHitbox();
+        botonIzquierda.dibujarConHitbox();
+        botonDerecha.dibujarConHitbox();
         renderer.setView(camera);
 
         pantalla.act(Gdx.graphics.getDeltaTime());
@@ -169,7 +201,9 @@ public class Mapa4 extends BaseScreen {
     }
 
     public void dispose() {
-        manager.dispose();
+        jugador.dispose();
+        renderer.dispose();
+        pantalla.dispose();
     }
 
     public TiledMap getMap() {

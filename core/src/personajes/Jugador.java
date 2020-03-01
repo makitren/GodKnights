@@ -220,9 +220,6 @@ public class Jugador extends Actor {
 
     }
 
-
-
-
      public void pararPersonaje(char letra) {
         switch (letra) {
             case 'd':
@@ -260,9 +257,6 @@ public class Jugador extends Actor {
         }
 
     }
-
-
-
     public void pararJugador() {
         texture = new Texture(Gdx.files.internal("Sprites/gfx/character.png"));
         tmp = TextureRegion.split(texture, texture.getWidth() / 17, texture.getHeight() / 8);
@@ -305,5 +299,4 @@ public class Jugador extends Actor {
     public void dispose(){
         batch.dispose();
     }
-
 }

@@ -20,6 +20,7 @@ import actores.EntradaCasaMapa2;
 import actores.EntradaMapa3;
 import actores.SalidaMapa2;
 import actores.SalidaMapa3;
+import escuchadores.Botones;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -78,6 +79,14 @@ public class Mapa3 extends BaseScreen {
             pantalla=new Stage();
             pantalla.setDebugAll(true);
             pantalla.addActor(jugador);
+            botonArriba=new Botones(jugador);
+            botonAbajo=new Botones.BotonAbajo(jugador);
+            botonIzquierda=new Botones.BotonIzquierda(jugador);
+            botonDerecha=new Botones.BotonDerecha(jugador);
+            pantalla.addActor(botonArriba);
+            pantalla.addActor(botonAbajo);
+            pantalla.addActor(botonIzquierda);
+            pantalla.addActor(botonDerecha);
 
             em=new EntradaMapa3();
             sm=new SalidaMapa3();
@@ -129,6 +138,10 @@ public class Mapa3 extends BaseScreen {
         renderer.getBatch().end();
         em.dibujar();
         sm.dibujar();
+        botonArriba.dibujarConHitbox();
+        botonAbajo.dibujarConHitbox();
+        botonIzquierda.dibujarConHitbox();
+        botonDerecha.dibujarConHitbox();
         renderer.setView(camera);
 
         pantalla.act(Gdx.graphics.getDeltaTime());
@@ -157,7 +170,10 @@ public class Mapa3 extends BaseScreen {
     }
 
     public void dispose() {
-            manager.dispose();
+
+        jugador.dispose();
+        renderer.dispose();
+        pantalla.dispose();
         }
 
         public TiledMap getMap() {
