@@ -13,6 +13,7 @@ public class Colisiones {
     private Actor[]actores;
     private Rectangle[]rect;
     private Rectangle jugador;
+
     public void checkCollision(TiledMap map, Jugador personaje) {
         jugador=new Rectangle();
         jugador.set(personaje.getX(),personaje.getY(),personaje.getWidth(),personaje.getHeight());

@@ -41,6 +41,7 @@ public class BaseScreen implements Screen {
     protected TiledMapTileLayer terrainLayer,terrainLayer2,terrainLayer3;
     protected Colisiones colisiones;
     protected Table tableBotones;
+    protected float w,h;
 
 
     public BaseScreen(Juego g){
@@ -49,6 +50,9 @@ public class BaseScreen implements Screen {
         Gdx.app.log("Pixels Anchura",Gdx.graphics.getWidth()+"");
 
         game=g;
+
+    }
+    public BaseScreen(){
 
     }
     @Override

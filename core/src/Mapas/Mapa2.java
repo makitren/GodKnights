@@ -38,10 +38,22 @@ public class Mapa2 extends BaseScreen {
 
 
 
+    public float getW() {
+        return w;
+    }
+
+    public float getH() {
+        return h;
+    }
+    public Mapa2 (){
+
+    }
+
     public Mapa2(Juego g){
         super(g);
         this.juego=g;
-
+        w=Gdx.graphics.getWidth();
+        h=Gdx.graphics.getHeight();
          map = new TmxMapLoader().load("Mapas/MapaInicialFinal.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -61,7 +73,8 @@ public class Mapa2 extends BaseScreen {
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
-
+        w=w/mapWidthInPixels;
+        h=h/mapHeightInPixels;
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         System.out.println(WIDTH);
