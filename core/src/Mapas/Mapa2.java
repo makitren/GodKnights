@@ -57,6 +57,7 @@ public class Mapa2 extends BaseScreen {
         batch=new SpriteBatch();
         //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
         jugador=new Jugador(map,camera,480,500,mapWidthInPixels/20 ,mapHeightInPixels/20 );
+       //jugador.setBounds(480,500,mapWidthInPixels/20 ,mapHeightInPixels/20);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -105,7 +106,7 @@ public class Mapa2 extends BaseScreen {
 
                     jugador.moverJugador('w');
                     jugador.hacerAnimaciones('w');
-
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -115,7 +116,7 @@ public class Mapa2 extends BaseScreen {
 
                 jugador.moverJugador('s');
                 jugador.hacerAnimaciones('s');
-
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -125,7 +126,7 @@ public class Mapa2 extends BaseScreen {
 
                 jugador.moverJugador('d');
                 jugador.hacerAnimaciones('d');
-
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -135,6 +136,7 @@ public class Mapa2 extends BaseScreen {
 
                 jugador.moverJugador('a');
                 jugador.hacerAnimaciones('a');
+                System.out.println(jugador.getX());
 
                 return true;
             }
@@ -162,20 +164,16 @@ public class Mapa2 extends BaseScreen {
         Gdx.input.setInputProcessor(multiplexer);
         Gdx.input.setInputProcessor(pantalla);
 
-        pantalla.setDebugAll(true);
+
         pantalla.addActor(jugador);
 
         ecm=new EntradaCasaMapa2();
         sm=new SalidaMapa2();
+       // ecm.setBounds(Gdx.graphics.getWidth()*0.2f,Gdx.graphics.getHeight()*0.002f,50,10);
 
 
         pantalla.addActor(ecm);
         pantalla.addActor(sm);
-
-
-        //botonArriba.setBounds(Gdx.graphics.getWidth() / 18.9666f, Gdx.graphics.getHeight() / 6.4f, Gdx.graphics.getWidth() / 11, Gdx.graphics.getHeight() / 11);
-
-
 
 
         for(int b=0;b<colisiones.getActores().length-1;b++){
@@ -183,16 +181,13 @@ public class Mapa2 extends BaseScreen {
 
         }
         System.out.println(colisiones.getActores().length);
+        pantalla.setDebugAll(true);
 
-
+        //System.out.println(jugador.getX()+"Jugador");
+        //System.out.println(ecm.getX()+"ECM");
     }
-
-
-
-
     @Override
     public void show() {
-
     }
 
     @Override
@@ -207,14 +202,23 @@ public class Mapa2 extends BaseScreen {
         renderer.getBatch().end();
         batch.begin();
         jugador.dibujarConHitbox(batch);
-       // upImg.draw(batch,delta);
         batch.end();
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
-        ecm.dibujar();
-        sm.dibujar();
+        ecm.dibujarConHitbox();
+        sm.dibujarConHitbox();
 
+        /*
+        if(jugador.checkCollision(ecm)==true){
+            game.setPantallaActual(new Mapa1(this.game));
+        }
+        */
+        /*
+        if (jugador.getX()==ecm.getX()){
+            game.setPantallaActual(new Mapa1(this.game));
+        }
+        */
         renderer.setView(camera);
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();

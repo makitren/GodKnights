@@ -39,7 +39,7 @@ public class Actores extends Actor {
 
 
     public Actores(String rutaTextura, float x, float y, float posAlt, float posAnc) {
-        //shapeRenderer=new ShapeRenderer();
+        shapeRenderer=new ShapeRenderer();
         //Cambio Posición del Sprite
         sprite=new Sprite(new Texture(rutaTextura));
         dimensiones=new Rectangle((int)x,(int)y,(int)posAlt,(int)posAnc);
@@ -60,7 +60,7 @@ public class Actores extends Actor {
         batch.end();
 
     }
-/*
+
     public void dibujarConHitbox(){
         batch.begin();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -70,7 +70,7 @@ public class Actores extends Actor {
         shapeRenderer.end();
         batch.end();
     }
-*/
+
 
 
     public Rectangle getHitBox(){

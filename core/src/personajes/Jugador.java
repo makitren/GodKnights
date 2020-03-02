@@ -105,6 +105,16 @@ public class Jugador extends Actor {
 
 
     }
+    public boolean checkCollision(Actores c){
+        boolean overlaps=getHitBox().overlaps(c.getHitBox());
+        if(overlaps&&colliding==false){
+            colliding=true;
+            System.out.println("Colsionando con "+c.getClass().getName());
+        }else if(!overlaps){
+            colliding=false;
+        }
+        return colliding;
+    }
 
 
     /**

@@ -55,7 +55,7 @@ public class Mapa1 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/7 );
+        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/5 );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -158,9 +158,9 @@ public class Mapa1 extends BaseScreen {
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
-        Gdx.input.setInputProcessor(multiplexer);
-        Gdx.input.setInputProcessor(pantalla);
 
+        Gdx.input.setInputProcessor(pantalla);
+        //Gdx.input.setInputProcessor(multiplexer);
 
 
         pantalla.setDebugAll(true);
@@ -214,7 +214,8 @@ public class Mapa1 extends BaseScreen {
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
-        eci.dibujar();
+        eci.dibujarConHitbox();
+
 
         renderer.setView(camera);
 

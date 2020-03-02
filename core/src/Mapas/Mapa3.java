@@ -156,7 +156,7 @@ public class Mapa3 extends BaseScreen {
 
             InputMultiplexer multiplexer = new InputMultiplexer();
             multiplexer.addProcessor(new TecladoJugador(jugador));
-            Gdx.input.setInputProcessor(multiplexer);
+            //Gdx.input.setInputProcessor(multiplexer);
             Gdx.input.setInputProcessor(pantalla);
 
 
@@ -212,8 +212,8 @@ public class Mapa3 extends BaseScreen {
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
-        em.dibujar();
-        sm.dibujar();
+        em.dibujarConHitbox();
+        sm.dibujarConHitbox();
 
         renderer.setView(camera);
 
