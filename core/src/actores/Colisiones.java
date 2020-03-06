@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import personajes.Jugador;
 
@@ -31,9 +32,10 @@ public class Colisiones {
             RectangleMapObject obj1 = (RectangleMapObject) mons.get(i);
             Rectangle rect1 = obj1.getRectangle();
             rect[i]=new Rectangle((rect1.x*2),(rect1.y*2),(rect1.width*2),(rect1.height*2));
+
             actores[i]=new Actor();
             actores[i].setBounds(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
-
+            actores[i].setTouchable(Touchable.disabled);
         }
         MapObjects mons2=map.getLayers().get("Salida").getObjects();
         obj2=new RectangleMapObject[mons2.getCount()];
