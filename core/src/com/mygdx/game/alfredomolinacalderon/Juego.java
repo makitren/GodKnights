@@ -14,7 +14,8 @@ public class Juego extends Game {
     private BaseScreen pantallaActual;
 	@Override
 	public void create() {
-		this.setPantallaActual(new Mapa2(this));
+			this.setPantallaActual(new Mapa1(this,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+
 	}
 
 	public void setPantallaActual(BaseScreen pa){
@@ -25,12 +26,9 @@ public class Juego extends Game {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		pantallaActual.render(Gdx.graphics.getDeltaTime());
-
 	}
-
 		public void dispose (){
 		pantallaActual.dispose();
 	}
-
 	}
 

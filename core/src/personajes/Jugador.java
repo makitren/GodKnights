@@ -20,11 +20,14 @@ import com.mygdx.game.alfredomolinacalderon.Juego;
 import java.util.ArrayList;
 
 import Mapas.Mapa1;
+import Mapas.Mapa2;
+import Mapas.Mapa3;
+import Mapas.Mapa4;
 import actores.Actores;
 import actores.Colisiones;
 
 public class Jugador extends Actor {
-    private int x,y;
+    private float x,y;
     private Sprite sprite;
     private Boolean colliding;
     private Texture texture;
@@ -51,7 +54,11 @@ public class Jugador extends Actor {
     private Rectangle[]rectangles;
     private Colisiones colisiones;
      float anchoJugador, largoJugador;
-    public Jugador(TiledMap mapa, OrthographicCamera c,int posicionPersonajeX, int posicionPersonajeY, float anchoJugador, float largoJugador) {
+     private Juego juego;
+    public Jugador(TiledMap mapa, OrthographicCamera c,float posicionPersonajeX, float posicionPersonajeY, float anchoJugador, float largoJugador, Juego juego) {
+
+        colision=false;
+        this.juego=juego;
         this.x=posicionPersonajeX;
         this.y=posicionPersonajeY;
         this.anchoJugador=anchoJugador;
@@ -106,15 +113,56 @@ public class Jugador extends Actor {
 
 
     }
-    public boolean checkCollision(Actores c){
-        boolean overlaps=getHitBox().overlaps(c.getHitBox());
-        if(overlaps&&colliding==false){
-            colliding=true;
-            System.out.println("Colsionando con "+c.getClass().getName());
-        }else if(!overlaps){
-            colliding=false;
+    public boolean checkCollision(){
+        if(colision==false){
+            for (int i=0;i<colisiones.getSalida().length;i++){
+                if(colisiones.getSalida()[i].overlaps(rectangle.set(x,y,anchoJugador,largoJugador))){
+                    switch (colisiones.getObj2()[i].getName()){
+                        case "EntradaMapa2":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                            System.out.println("Entrando a mapa1");
+                            break;
+                        case "SalidaMapa2":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f));
+                            System.out.println("Entrando a mapa3");
+                            break;
+                        case "SalidaMapa1":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
+                            System.out.println("Entrando a  mapa2");
+                            break;
+                        case "EntradaMapa3":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
+                            System.out.println("Entrando a mapa2");
+                            break;
+
+                        case "SalidaMapa3":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f));
+                            System.out.println("Entrando a mapa4");
+                            break;
+                        case "EntradaMapa4":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f));
+                            System.out.println("Entrando a mapa3");
+                            break;
+                        case "SalidaMapa4":
+                            juego.dispose();
+                            juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                            System.out.println("Entrando a mapa1");
+                            break;
+                    }
+                }
+
+            }
+        }else {
+            System.out.println("No detectado");
+            colision = false;
         }
-        return colliding;
+        return colision;
     }
 
 
@@ -126,7 +174,7 @@ public class Jugador extends Actor {
         switch (direccion){
             case 'w':
                 //Cambio posición del jugador, todavía no cambia nada visualmente
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
@@ -136,13 +184,14 @@ public class Jugador extends Actor {
                         System.out.println(colision);
                     }
                 }
+
                 if(colision==false){
-                    y=y+7;
+                    y=y+13;
                 }
 
                 break;
             case 's':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y-7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
@@ -153,11 +202,11 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    y=y-7;
+                    y=y-13;
                 }
                 break;
             case 'a':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x-7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
@@ -168,11 +217,11 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    x=x-7;
+                    x=x-13;
                 }
                 break;
             case 'd':
-                for(int b=0;b<rectangles.length;b++){
+                for(int b=0;b<rectangles.length-1;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
                         System.out.println(colision);
@@ -183,7 +232,7 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    x=x+7;
+                    x=x+13;
                 }
                 break;
         }

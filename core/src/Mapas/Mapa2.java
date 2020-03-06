@@ -35,25 +35,14 @@ public class Mapa2 extends BaseScreen {
     private SalidaMapa2 sm;
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
+    private float posX,posY;
 
 
-
-    public float getW() {
-        return w;
-    }
-
-    public float getH() {
-        return h;
-    }
-    public Mapa2 (){
-
-    }
-
-    public Mapa2(Juego g){
+    public Mapa2(Juego g,float posicionPersonajeX, float posicionPersonajeY){
         super(g);
         this.juego=g;
-        w=Gdx.graphics.getWidth();
-        h=Gdx.graphics.getHeight();
+        this.posX=posicionPersonajeX;
+        this.posY=posicionPersonajeY;
          map = new TmxMapLoader().load("Mapas/MapaInicialFinal.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -68,13 +57,12 @@ public class Mapa2 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
         //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
-        jugador=new Jugador(map,camera,480,500,mapWidthInPixels/20 ,mapHeightInPixels/20 );
+        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/20 ,mapHeightInPixels/20,juego);
        //jugador.setBounds(480,500,mapWidthInPixels/20 ,mapHeightInPixels/20);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
-        w=w/mapWidthInPixels;
-        h=h/mapHeightInPixels;
+
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         System.out.println(WIDTH);
@@ -85,14 +73,17 @@ public class Mapa2 extends BaseScreen {
         camera.position.y=HEIGHT/2;
         camera.position.set(WIDTH/2,HEIGHT/2,1);
 
-        MapLayers mapLayers = map.getLayers();
-        terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
-        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
+
 
 
         pantalla=new Stage(new ScreenViewport());
+        ecm=new EntradaCasaMapa2();
+        sm=new SalidaMapa2();
+        ecm.setBounds(Gdx.graphics.getWidth()*0.21f,Gdx.graphics.getHeight()*0.51f,120,80 );
 
 
+        pantalla.addActor(ecm);
+        pantalla.addActor(sm);
 
 
         buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
@@ -119,6 +110,7 @@ public class Mapa2 extends BaseScreen {
 
                     jugador.moverJugador('w');
                     jugador.hacerAnimaciones('w');
+
                 System.out.println(jugador.getX());
                 return true;
             }
@@ -166,35 +158,29 @@ public class Mapa2 extends BaseScreen {
         pantalla.addActor(tableBotones);
 
 
-
+        MapLayers mapLayers = map.getLayers();
+        terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
+        terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
 
         colisiones=new Colisiones();
         colisiones.checkCollision(map,jugador);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
-        multiplexer.addProcessor(pantalla);
-        Gdx.input.setInputProcessor(multiplexer);
         Gdx.input.setInputProcessor(pantalla);
 
-
+        pantalla.setDebugAll(true);
         pantalla.addActor(jugador);
 
-        ecm=new EntradaCasaMapa2();
-        sm=new SalidaMapa2();
-       // ecm.setBounds(Gdx.graphics.getWidth()*0.2f,Gdx.graphics.getHeight()*0.002f,50,10);
 
 
-        pantalla.addActor(ecm);
-        pantalla.addActor(sm);
 
-
-        for(int b=0;b<colisiones.getActores().length-1;b++){
+       for(int b=0;b<colisiones.getActores().length-1;b++){
             pantalla.addActor(colisiones.getActores()[b]);
 
         }
         System.out.println(colisiones.getActores().length);
-        pantalla.setDebugAll(true);
+
 
         //System.out.println(jugador.getX()+"Jugador");
         //System.out.println(ecm.getX()+"ECM");
@@ -221,17 +207,11 @@ public class Mapa2 extends BaseScreen {
         renderer.getBatch().end();
         ecm.dibujarConHitbox();
         sm.dibujarConHitbox();
+        ecm=(EntradaCasaMapa2)pantalla.getActors().get(0);
 
-        /*
-        if(jugador.checkCollision(ecm)==true){
-            game.setPantallaActual(new Mapa1(this.game));
-        }
-        */
-        /*
-        if (jugador.getX()==ecm.getX()){
-            game.setPantallaActual(new Mapa1(this.game));
-        }
-        */
+
+        jugador.checkCollision();
+
         renderer.setView(camera);
         pantalla.act(Gdx.graphics.getDeltaTime());
         pantalla.draw();

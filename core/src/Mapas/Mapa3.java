@@ -36,12 +36,14 @@ public class Mapa3 extends BaseScreen {
     private SalidaMapa3 sm;
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
+    private float posX,posY;
 
-        public Mapa3(Juego g){
+        public Mapa3(Juego g, float posicionPersonajeX, float posicionPersonajeY){
             super(g);
             this.juego=g;
             shapeRenderer=new ShapeRenderer();
-
+            this.posX=posicionPersonajeX;
+            this.posY=posicionPersonajeY;
             map = new TmxMapLoader().load("Mapas/CiudadBosqueFinal.tmx");
             renderer = new OrthogonalTiledMapRenderer(map,unitScale);
             camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -56,7 +58,7 @@ public class Mapa3 extends BaseScreen {
             mapHeightInPixels = mapHeightInTiles * tileHeight;
             batch=new SpriteBatch();
             //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
-            jugador=new Jugador(map,camera,280,100,mapWidthInPixels/20 ,mapHeightInPixels/20 );
+            jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/20 ,mapHeightInPixels/20,juego );
             System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
             System.out.println(mapHeightInTiles);
             //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -77,6 +79,10 @@ public class Mapa3 extends BaseScreen {
 
 
             pantalla=new Stage(new ScreenViewport());
+            em=new EntradaMapa3();
+            sm=new SalidaMapa3();
+            pantalla.addActor(em);
+            pantalla.addActor(sm);
 
             buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
             Skin buttonSkin=new Skin();
@@ -164,10 +170,7 @@ public class Mapa3 extends BaseScreen {
             pantalla.addActor(jugador);
 
 
-            em=new EntradaMapa3();
-            sm=new SalidaMapa3();
-            pantalla.addActor(em);
-            pantalla.addActor(sm);
+
 
             for(int b=0;b<colisiones.getActores().length-1;b++){
                 pantalla.addActor(colisiones.getActores()[b]);
@@ -214,6 +217,8 @@ public class Mapa3 extends BaseScreen {
         renderer.getBatch().end();
         em.dibujarConHitbox();
         sm.dibujarConHitbox();
+
+        jugador.checkCollision();
 
         renderer.setView(camera);
 

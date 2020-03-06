@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="36">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="32" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="37">
  <tileset firstgid="1" source="InteriorCasaInicial.tsx"/>
  <layer id="1" name="Suelo" width="32" height="24" locked="1">
   <data encoding="csv">
@@ -71,5 +71,8 @@
   <object id="15" x="48.3194" y="68.7623" width="15.7967" height="694.127"/>
   <object id="16" x="66.833" y="746.73" width="916.546" height="14.8766"/>
   <object id="35" x="601" y="625" width="125" height="62"/>
+ </objectgroup>
+ <objectgroup id="5" name="Salida">
+  <object id="36" name="SalidaMapa1" x="451.82" y="709.469" width="117.622" height="49.4761"/>
  </objectgroup>
 </map>

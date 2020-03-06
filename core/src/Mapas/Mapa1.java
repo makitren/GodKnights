@@ -35,45 +35,45 @@ public class Mapa1 extends BaseScreen {
     private EntradaCasaInicial eci;
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
-    public Mapa1(Juego g){
-        super(g);
-        this.juego=g;
-        shapeRenderer=new ShapeRenderer();
+    private float posX, posY;
+    public Mapa1(Juego g, float posicionPersonajeX,float posicionPersonajeY){
+            super(g);
+            this.juego=g;
+            this.posX=posicionPersonajeX;
+            this.posY=posicionPersonajeY;
+             map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
+            renderer = new OrthogonalTiledMapRenderer(map,unitScale);
+            camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+            camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+            camera.update();
+             properties = map.getProperties();
+            tileWidth = properties.get("tilewidth", Integer.class);
+            tileHeight = properties.get("tileheight", Integer.class);
+            mapWidthInTiles = properties.get("width", Integer.class);
+            mapHeightInTiles = properties.get("height", Integer.class);
+            mapWidthInPixels = mapWidthInTiles * tileWidth;
+            mapHeightInPixels = mapHeightInTiles * tileHeight;
+            batch=new SpriteBatch();
 
+            jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
+            System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
+            System.out.println(mapHeightInTiles);
+            //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
 
-         map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map,unitScale);
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-        camera.update();
-         properties = map.getProperties();
-        tileWidth = properties.get("tilewidth", Integer.class);
-        tileHeight = properties.get("tileheight", Integer.class);
-        mapWidthInTiles = properties.get("width", Integer.class);
-        mapHeightInTiles = properties.get("height", Integer.class);
-        mapWidthInPixels = mapWidthInTiles * tileWidth;
-        mapHeightInPixels = mapHeightInTiles * tileHeight;
-        batch=new SpriteBatch();
+            //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
+            WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
+            HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
+            System.out.println(WIDTH);
+            System.out.println(HEIGHT);
+            camera.setToOrtho(false, WIDTH,HEIGHT); //Establecemos la cámara, y le decimos cuanto tiene que ocupar. Doc:
 
-        jugador=new Jugador(map,camera,1080,150,mapWidthInPixels/10 ,mapHeightInPixels/5 );
-        System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
-        System.out.println(mapHeightInTiles);
-        //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
+            camera.position.x=WIDTH/2;
+            camera.position.y=HEIGHT/2;
+            camera.position.set(WIDTH/2,HEIGHT/2,1);
 
-        //Establecemos el zoom de la cámara. 0.1 es más cercano que 1.
-        WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
-        HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
-        System.out.println(WIDTH);
-        System.out.println(HEIGHT);
-        camera.setToOrtho(false, WIDTH,HEIGHT); //Establecemos la cámara, y le decimos cuanto tiene que ocupar. Doc:
-
-        camera.position.x=WIDTH/2;
-        camera.position.y=HEIGHT/2;
-        camera.position.set(WIDTH/2,HEIGHT/2,1);
-
-        pantalla=new Stage(new ScreenViewport());
-
-
+            pantalla=new Stage(new ScreenViewport());
+            eci=new EntradaCasaInicial();
+            pantalla.addActor(eci);
 
         buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
         Skin buttonSkin=new Skin();
@@ -100,6 +100,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.moverJugador('w');
                 jugador.hacerAnimaciones('w');
 
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -109,7 +110,7 @@ public class Mapa1 extends BaseScreen {
 
                 jugador.moverJugador('s');
                 jugador.hacerAnimaciones('s');
-
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -119,7 +120,7 @@ public class Mapa1 extends BaseScreen {
 
                 jugador.moverJugador('d');
                 jugador.hacerAnimaciones('d');
-
+                System.out.println(jugador.getX());
                 return true;
             }
         });
@@ -129,6 +130,7 @@ public class Mapa1 extends BaseScreen {
 
                 jugador.moverJugador('a');
                 jugador.hacerAnimaciones('a');
+                System.out.println(jugador.getX());
 
                 return true;
             }
@@ -145,113 +147,99 @@ public class Mapa1 extends BaseScreen {
         pantalla.addActor(tableBotones);
 
 
-
         MapLayers mapLayers = map.getLayers();
-
         terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
-
 
         colisiones=new Colisiones();
         colisiones.checkCollision(map,jugador);
 
-
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
-
         Gdx.input.setInputProcessor(pantalla);
-        //Gdx.input.setInputProcessor(multiplexer);
 
 
-        pantalla.setDebugAll(true);
-        pantalla.addActor(jugador);
+            colisiones=new Colisiones();
+            colisiones.checkCollision(map,jugador);
 
 
-        eci=new EntradaCasaInicial();
-        pantalla.addActor(eci);
+            pantalla.setDebugAll(true);
+            pantalla.addActor(jugador);
 
 
-        for(int b=0;b<colisiones.getActores().length-1;b++){
-            pantalla.addActor(colisiones.getActores()[b]);
-            colisiones.getActores()[b].setColor(Color.BLUE);
+
+            for(int b=0;b<colisiones.getActores().length-1;b++){
+                pantalla.addActor(colisiones.getActores()[b]);
+
+            }
+
+            System.out.println(colisiones.getActores().length);
 
         }
 
-        System.out.println(colisiones.getActores().length);
+
+        @Override
+        public void show() {
+
+
+        }
+
+        @Override
+        public void render(float delta) {
+
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            super.render(delta);
+
+            renderer.getBatch().begin();
+            renderer.renderTileLayer(terrainLayer);
+            renderer.getBatch().end();
+            batch.begin();
+            jugador.dibujarConHitbox(batch);
+            batch.end();
+            renderer.getBatch().begin();
+            renderer.renderTileLayer(terrainLayer2);
+            renderer.getBatch().end();
+            eci.dibujarConHitbox();
+
+            jugador.checkCollision();
+
+            renderer.setView(camera);
+
+            pantalla.act(Gdx.graphics.getDeltaTime());
+            pantalla.draw();
+
+        }
+
+        @Override
+        public void resize(int width, int height) {
+
+        }
+
+        @Override
+        public void pause() {
+
+        }
+
+        @Override
+        public void resume() {
+
+        }
+
+        @Override
+        public void hide() {
+
+        }
+
+        public void dispose() {
+            jugador.dispose();
+            renderer.dispose();
+            pantalla.dispose();
+        }
+
+        public TiledMap getMap() {
+            return map;
+        }
+
     }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public int getMapWidthInPixels() {
-        return mapWidthInPixels;
-    }
-
-    public int getMapHeightInPixels() {
-        return mapHeightInPixels;
-    }
-
-    @Override
-    public void show() {
-
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        super.render(delta);
-        renderer.getBatch().begin();
-        renderer.renderTileLayer(terrainLayer);
-        renderer.getBatch().end();
-        batch.begin();
-        jugador.dibujarConHitbox(batch);
-        batch.end();
-        renderer.getBatch().begin();
-        renderer.renderTileLayer(terrainLayer2);
-        renderer.getBatch().end();
-        eci.dibujarConHitbox();
-
-
-        renderer.setView(camera);
-
-        pantalla.act(Gdx.graphics.getDeltaTime());
-        pantalla.draw();
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    public void dispose() {
-        jugador.dispose();
-        renderer.dispose();
-        pantalla.dispose();
-    }
-
-    public TiledMap getMap() {
-        return map;
-    }
-
-}

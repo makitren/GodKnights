@@ -52,9 +52,7 @@ public class BaseScreen implements Screen {
         game=g;
 
     }
-    public BaseScreen(){
-
-    }
+   
     @Override
     public void show() {
     }
@@ -87,7 +85,6 @@ public class BaseScreen implements Screen {
 
     @Override
     public void dispose() {
-        manager.dispose();
         jugador.dispose();
         renderer.dispose();
         pantalla.dispose();

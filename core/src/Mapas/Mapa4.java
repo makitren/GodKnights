@@ -39,11 +39,14 @@ public class Mapa4 extends BaseScreen {
     private SalidaMapa4 sm;
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
+    private float posX,posY;
 
 
-    public Mapa4(Juego g){
+    public Mapa4(Juego g,float posicionPersonajeX, float posicionPersonajeY){
         super(g);
         this.juego=g;
+        this.posX=posicionPersonajeX;
+        this.posY=posicionPersonajeY;
         shapeRenderer=new ShapeRenderer();
         map = new TmxMapLoader().load("Mapas/Mazmorra1Final.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
@@ -59,7 +62,7 @@ public class Mapa4 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
 
-        jugador=new Jugador(map,camera,100,500,mapWidthInPixels/10 ,mapHeightInPixels/5 );
+        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -83,7 +86,12 @@ public class Mapa4 extends BaseScreen {
 
         pantalla=new Stage(new ScreenViewport());
 
+        em=new EntradaMapa4();
+        sm=new SalidaMapa4();
 
+        pantalla.addActor(em);
+        pantalla.addActor(sm);
+        pantalla.setDebugAll(true);
 
         buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
         Skin buttonSkin=new Skin();
@@ -182,14 +190,7 @@ public class Mapa4 extends BaseScreen {
 
         Gdx.input.setInputProcessor(pantalla);
         pantalla.addActor(jugador);
-        em=new EntradaMapa4();
-        sm=new SalidaMapa4();
 
-
-
-        pantalla.addActor(em);
-        pantalla.addActor(sm);
-        pantalla.setDebugAll(true);
 
 
 
@@ -241,6 +242,7 @@ public class Mapa4 extends BaseScreen {
         batch.begin();
         jugador.dibujarConHitbox(batch);
         batch.end();
+        jugador.checkCollision();
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
