@@ -45,6 +45,7 @@ public class BaseScreen implements Screen {
     protected float w,h;
     protected BitmapFont bitmapFont;
     protected int arriba,abajo,derecha,izquierda;
+    boolean pulsado;
 
 
     public BaseScreen(Juego g){

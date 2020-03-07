@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -107,7 +108,7 @@ public class Mapa1 extends BaseScreen {
 
                 hacerMovimiento('w');
                 jugador.hacerAnimaciones('w');
-
+                pulsado=false;
                 arriba++;
                 return true;
 
@@ -115,6 +116,7 @@ public class Mapa1 extends BaseScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('w');
+                pulsado=true;
             }
         });
         botonAbajo.addListener(new ClickListener(){
@@ -123,12 +125,14 @@ public class Mapa1 extends BaseScreen {
 
                 hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
+                pulsado=false;
                 abajo++;
                 return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('s');
+                pulsado=true;
             }
         });
         botonDerecha.addListener(new ClickListener(){
@@ -138,12 +142,14 @@ public class Mapa1 extends BaseScreen {
                 hacerMovimiento('d');
                 jugador.hacerAnimaciones('d');
                 System.out.println(jugador.getX());
+                pulsado=false;
                 derecha++;
                 return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('d');
+                pulsado=true;
             }
         });
         botonIzquierda.addListener(new ClickListener(){
@@ -153,24 +159,29 @@ public class Mapa1 extends BaseScreen {
                 hacerMovimiento('a');
                 jugador.hacerAnimaciones('a');
                 System.out.println(jugador.getX());
+                pulsado=false;
                 izquierda++;
                 return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('a');
+                pulsado=true;
             }
         });
 
         tableBotones=new Table();
+
         tableBotones.bottom();
         tableBotones.debug();
+
         tableBotones.setFillParent(true);
         tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonIzquierda).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         pantalla.addActor(tableBotones);
+        tableBotones.setTouchable(Touchable.childrenOnly);
 
 
         MapLayers mapLayers = map.getLayers();
@@ -246,7 +257,7 @@ public class Mapa1 extends BaseScreen {
             bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
             bitmapFont.setColor(Color.BLACK);
             batch.end();
-            if(Gdx.input.isButtonPressed(0)){
+            if(Gdx.input.isButtonPressed(0)&&!pulsado){
                 jugador.moverJugador(letra);
             }
 

@@ -125,6 +125,7 @@ public class Mapa4 extends BaseScreen {
 
                 hacerMovimiento('w');
                 jugador.hacerAnimaciones('w');
+                pulsado=false;
 
                 arriba++;
                 return true;
@@ -133,6 +134,7 @@ public class Mapa4 extends BaseScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('w');
+                pulsado=true;
             }
         });
         botonAbajo.addListener(new ClickListener(){
@@ -142,11 +144,13 @@ public class Mapa4 extends BaseScreen {
                 hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
                 abajo++;
+                pulsado=false;
                 return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('s');
+                pulsado=true;
             }
         });
         botonDerecha.addListener(new ClickListener(){
@@ -156,12 +160,14 @@ public class Mapa4 extends BaseScreen {
                 hacerMovimiento('d');
                 jugador.hacerAnimaciones('d');
                 System.out.println(jugador.getX());
+                pulsado=false;
                 derecha++;
                 return true;
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('d');
+                pulsado=true;
             }
         });
         botonIzquierda.addListener(new ClickListener(){
@@ -171,6 +177,7 @@ public class Mapa4 extends BaseScreen {
                 hacerMovimiento('a');
                 jugador.hacerAnimaciones('a');
                 System.out.println(jugador.getX());
+                pulsado=false;
                 izquierda++;
 
                 return true;
@@ -178,6 +185,7 @@ public class Mapa4 extends BaseScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
                 jugador.pararPersonaje('a');
+                pulsado=true;
             }
         });
 
@@ -271,7 +279,7 @@ public class Mapa4 extends BaseScreen {
         bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
         bitmapFont.setColor(Color.BLACK);
         batch.end();
-        if(Gdx.input.isButtonPressed(0)){
+        if(Gdx.input.isButtonPressed(0)&&!pulsado){
             jugador.moverJugador(letra);
         }
 
