@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -41,6 +43,11 @@ public class Mapa3 extends BaseScreen {
         public Mapa3(Juego g, float posicionPersonajeX, float posicionPersonajeY){
             super(g);
             this.juego=g;
+            bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
+            arriba=0;
+            abajo=0;
+            derecha=0;
+            izquierda=0;
             shapeRenderer=new ShapeRenderer();
             this.posX=posicionPersonajeX;
             this.posY=posicionPersonajeY;
@@ -108,6 +115,7 @@ public class Mapa3 extends BaseScreen {
 
                     jugador.moverJugador('w');
                     jugador.hacerAnimaciones('w');
+                    arriba++;
 
                     return true;
                 }
@@ -118,6 +126,7 @@ public class Mapa3 extends BaseScreen {
 
                     jugador.moverJugador('s');
                     jugador.hacerAnimaciones('s');
+                    abajo++;
 
                     return true;
                 }
@@ -128,6 +137,7 @@ public class Mapa3 extends BaseScreen {
 
                     jugador.moverJugador('d');
                     jugador.hacerAnimaciones('d');
+                    derecha++;
 
                     return true;
                 }
@@ -138,6 +148,7 @@ public class Mapa3 extends BaseScreen {
 
                     jugador.moverJugador('a');
                     jugador.hacerAnimaciones('a');
+                    izquierda++;
 
                     return true;
                 }
@@ -217,6 +228,17 @@ public class Mapa3 extends BaseScreen {
         renderer.getBatch().end();
         em.dibujarConHitbox();
         sm.dibujarConHitbox();
+        batch.begin();
+        GlyphLayout puntosLayoutAba=new GlyphLayout(bitmapFont, "Abajo:"+abajo);
+        GlyphLayout puntosLayoutIzq=new GlyphLayout(bitmapFont, "Izq:"+izquierda);
+        GlyphLayout puntosLayoutDec=new GlyphLayout(bitmapFont, "Derecha:"+derecha);
+        GlyphLayout puntosLayoutArr=new GlyphLayout(bitmapFont, "Arriba:"+arriba);
+        bitmapFont.draw(batch,puntosLayoutAba,Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/13f);
+        bitmapFont.draw(batch,puntosLayoutArr,Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()/13f);
+        bitmapFont.draw(batch,puntosLayoutIzq,Gdx.graphics.getWidth()/1.65f,Gdx.graphics.getHeight()/13f);
+        bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
+        bitmapFont.setColor(Color.BLACK);
+        batch.end();
 
         jugador.checkCollision();
 

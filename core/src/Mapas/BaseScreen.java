@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -42,6 +43,8 @@ public class BaseScreen implements Screen {
     protected Colisiones colisiones;
     protected Table tableBotones;
     protected float w,h;
+    protected BitmapFont bitmapFont;
+    protected int arriba,abajo,derecha,izquierda;
 
 
     public BaseScreen(Juego g){

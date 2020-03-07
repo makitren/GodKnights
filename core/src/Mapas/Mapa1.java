@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -39,6 +41,11 @@ public class Mapa1 extends BaseScreen {
     public Mapa1(Juego g, float posicionPersonajeX,float posicionPersonajeY){
             super(g);
             this.juego=g;
+            bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
+            arriba=0;
+            abajo=0;
+            derecha=0;
+            izquierda=0;
             this.posX=posicionPersonajeX;
             this.posY=posicionPersonajeY;
              map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
@@ -101,6 +108,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.hacerAnimaciones('w');
 
                 System.out.println(jugador.getX());
+                arriba++;
                 return true;
             }
         });
@@ -111,6 +119,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.moverJugador('s');
                 jugador.hacerAnimaciones('s');
                 System.out.println(jugador.getX());
+                abajo++;
                 return true;
             }
         });
@@ -121,6 +130,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.moverJugador('d');
                 jugador.hacerAnimaciones('d');
                 System.out.println(jugador.getX());
+                derecha++;
                 return true;
             }
         });
@@ -131,6 +141,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.moverJugador('a');
                 jugador.hacerAnimaciones('a');
                 System.out.println(jugador.getX());
+                izquierda++;
 
                 return true;
             }
@@ -175,6 +186,9 @@ public class Mapa1 extends BaseScreen {
 
             System.out.println(colisiones.getActores().length);
 
+
+
+
         }
 
 
@@ -193,15 +207,30 @@ public class Mapa1 extends BaseScreen {
             super.render(delta);
 
             renderer.getBatch().begin();
+
             renderer.renderTileLayer(terrainLayer);
+
             renderer.getBatch().end();
             batch.begin();
+
             jugador.dibujarConHitbox(batch);
+
             batch.end();
             renderer.getBatch().begin();
             renderer.renderTileLayer(terrainLayer2);
             renderer.getBatch().end();
             eci.dibujarConHitbox();
+            batch.begin();
+            GlyphLayout puntosLayoutAba=new GlyphLayout(bitmapFont, "Abajo:"+abajo);
+            GlyphLayout puntosLayoutIzq=new GlyphLayout(bitmapFont, "Izq:"+izquierda);
+            GlyphLayout puntosLayoutDec=new GlyphLayout(bitmapFont, "Derecha:"+derecha);
+            GlyphLayout puntosLayoutArr=new GlyphLayout(bitmapFont, "Arriba:"+arriba);
+            bitmapFont.draw(batch,puntosLayoutAba,Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/13f);
+            bitmapFont.draw(batch,puntosLayoutArr,Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()/13f);
+            bitmapFont.draw(batch,puntosLayoutIzq,Gdx.graphics.getWidth()/1.65f,Gdx.graphics.getHeight()/13f);
+            bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
+            bitmapFont.setColor(Color.BLACK);
+            batch.end();
 
             jugador.checkCollision();
 
