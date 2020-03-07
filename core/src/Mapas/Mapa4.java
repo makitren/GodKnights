@@ -42,6 +42,7 @@ public class Mapa4 extends BaseScreen {
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
     private float posX,posY;
+    private char letra;
 
 
     public Mapa4(Juego g,float posicionPersonajeX, float posicionPersonajeY){
@@ -122,42 +123,61 @@ public class Mapa4 extends BaseScreen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('w');
+                hacerMovimiento('w');
                 jugador.hacerAnimaciones('w');
+
                 arriba++;
                 return true;
+
             }
-        });
-
-        botonDerecha.addListener(new ClickListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-
-                jugador.moverJugador('d');
-                jugador.hacerAnimaciones('d');
-                derecha++;
-                return true;
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('w');
             }
         });
         botonAbajo.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('s');
+                hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
                 abajo++;
                 return true;
             }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('s');
+            }
         });
+        botonDerecha.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
+                hacerMovimiento('d');
+                jugador.hacerAnimaciones('d');
+                System.out.println(jugador.getX());
+                derecha++;
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('d');
+            }
+        });
         botonIzquierda.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('a');
+                hacerMovimiento('a');
                 jugador.hacerAnimaciones('a');
+                System.out.println(jugador.getX());
                 izquierda++;
+
                 return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('a');
             }
         });
 
@@ -251,6 +271,9 @@ public class Mapa4 extends BaseScreen {
         bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
         bitmapFont.setColor(Color.BLACK);
         batch.end();
+        if(Gdx.input.isButtonPressed(0)){
+            jugador.moverJugador(letra);
+        }
 
 
         renderer.setView(camera);
@@ -284,6 +307,22 @@ public class Mapa4 extends BaseScreen {
         jugador.dispose();
         renderer.dispose();
         pantalla.dispose();
+    }
+    public void hacerMovimiento(char letra) {
+        switch (letra) {
+            case 'w':
+                this.letra = 'w';
+                break;
+            case 'd':
+                this.letra = 'd';
+                break;
+            case 's':
+                this.letra = 's';
+                break;
+            case 'a':
+                this.letra = 'a';
+                break;
+        }
     }
 
     public TiledMap getMap() {

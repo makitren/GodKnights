@@ -39,6 +39,7 @@ public class Mapa2 extends BaseScreen {
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
     private float posX,posY;
+    private char letra;
 
 
     public Mapa2(Juego g,float posicionPersonajeX, float posicionPersonajeY){
@@ -65,7 +66,7 @@ public class Mapa2 extends BaseScreen {
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
         //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
-        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/20 ,mapHeightInPixels/20,juego);
+        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/15 ,mapHeightInPixels/15,juego);
        //jugador.setBounds(480,500,mapWidthInPixels/20 ,mapHeightInPixels/20);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
@@ -116,46 +117,61 @@ public class Mapa2 extends BaseScreen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                    jugador.moverJugador('w');
+                   hacerMovimiento('w');
                     jugador.hacerAnimaciones('w');
 
-                System.out.println(jugador.getX());
                 arriba++;
                 return true;
+
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                    jugador.pararPersonaje('w');
             }
         });
         botonAbajo.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('s');
+                hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
-                System.out.println(jugador.getX());
                 abajo++;
                 return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('s');
             }
         });
         botonDerecha.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('d');
+                hacerMovimiento('d');
                 jugador.hacerAnimaciones('d');
                 System.out.println(jugador.getX());
                 derecha++;
                 return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('d');
             }
         });
         botonIzquierda.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
 
-                jugador.moverJugador('a');
+                hacerMovimiento('a');
                 jugador.hacerAnimaciones('a');
                 System.out.println(jugador.getX());
                 izquierda++;
 
                 return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)   {
+                jugador.pararPersonaje('a');
             }
         });
 
@@ -231,6 +247,9 @@ public class Mapa2 extends BaseScreen {
         bitmapFont.draw(batch,puntosLayoutDec,Gdx.graphics.getWidth()/1.4f,Gdx.graphics.getHeight()/13f);
         bitmapFont.setColor(Color.BLACK);
         batch.end();
+        if(Gdx.input.isButtonPressed(0)){
+            jugador.moverJugador(letra);
+        }
 
         jugador.checkCollision();
 
@@ -264,10 +283,27 @@ public class Mapa2 extends BaseScreen {
         renderer.dispose();
         pantalla.dispose();
     }
+    public void hacerMovimiento(char letra) {
+        switch (letra) {
+            case 'w':
+                this.letra = 'w';
+                break;
+            case 'd':
+                this.letra = 'd';
+                break;
+            case 's':
+                this.letra = 's';
+                break;
+            case 'a':
+                this.letra = 'a';
+                break;
+        }
+    }
 
     public TiledMap getMap() {
         return map;
     }
+
 
 
 }

@@ -29,12 +29,7 @@ public class BaseDeDatosAndroid implements BaseDeDatos {
        return puntuaciones;
     }
 
-    @Override
-    public void guardar(int nuevaPuntuacion) {
-
-    }
-
-    // @Override
+     @Override
     public void guardar(int movimientosArriba, int movimientosAbajo, int movimientosDerecha, int movimientosIzquierda) {
         SQLiteDatabase db=openHelper.getWritableDatabase();
         Cursor c=db.query("numeroMovimientos",

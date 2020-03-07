@@ -186,7 +186,7 @@ public class Jugador extends Actor {
                 }
 
                 if(colision==false){
-                    y=y+13;
+                    y=y+3;
                 }
 
                 break;
@@ -202,7 +202,7 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    y=y-13;
+                    y=y-3;
                 }
                 break;
             case 'a':
@@ -217,7 +217,7 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    x=x-13;
+                    x=x-3;
                 }
                 break;
             case 'd':
@@ -232,7 +232,7 @@ public class Jugador extends Actor {
                     }
                 }
                 if(colision==false){
-                    x=x+13;
+                    x=x+3;
                 }
                 break;
         }
