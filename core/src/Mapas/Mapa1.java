@@ -2,6 +2,7 @@ package Mapas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -40,6 +41,7 @@ public class Mapa1 extends BaseScreen {
     private TextureAtlas buttonAtlas;
     private float posX, posY;
     private char letra;
+
     public Mapa1(Juego g, float posicionPersonajeX,float posicionPersonajeY){
             super(g);
             this.juego=g;
@@ -48,6 +50,7 @@ public class Mapa1 extends BaseScreen {
             abajo=0;
             derecha=0;
             izquierda=0;
+
             w=Gdx.graphics.getWidth();
             h=Gdx.graphics.getHeight();
             this.posX=posicionPersonajeX;
@@ -290,8 +293,10 @@ public class Mapa1 extends BaseScreen {
 
         public void dispose() {
             jugador.dispose();
+            //sonidoPuerta.play(); 
             renderer.dispose();
             pantalla.dispose();
+
         }
     public void hacerMovimiento(char letra){
         switch (letra){

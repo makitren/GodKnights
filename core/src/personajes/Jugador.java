@@ -1,7 +1,7 @@
 package personajes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,13 +16,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
-import java.util.ArrayList;
-
 import Mapas.Mapa1;
 import Mapas.Mapa2;
 import Mapas.Mapa3;
 import Mapas.Mapa4;
-import actores.Actores;
 import actores.Colisiones;
 
 public class Jugador extends Actor {
@@ -54,6 +50,8 @@ public class Jugador extends Actor {
     private Rectangle[]rectangles;
     private Colisiones colisiones;
      float anchoJugador, largoJugador;
+    private Music sonidoColision;
+
      private Juego juego;
     public Jugador(TiledMap mapa, Colisiones col, OrthographicCamera c,float posicionPersonajeX, float posicionPersonajeY, float anchoJugador, float largoJugador, Juego juego) {
         this.colisiones=col;
@@ -67,6 +65,9 @@ public class Jugador extends Actor {
         texture=new Texture(Gdx.files.internal("Sprites/gfx/character.png"));
         this.sprite = new Sprite(texture);
         colliding=new Boolean(false);
+        sonidoColision=Gdx.audio.newMusic(Gdx.files.internal("raw/sonidoColision.mp3"));
+
+        sonidoColision.setVolume(10);
         this.camara = c;
         rectangles=colisiones.getRect();
         rectangle=new Rectangle(posicionPersonajeX,posicionPersonajeY,texture.getWidth(),texture.getHeight());
@@ -120,11 +121,10 @@ public class Jugador extends Actor {
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y+7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        sonidoColision.play();
                         System.out.println(colision);
                         break;
-                    }else{
-                        colision=false;
-                        System.out.println(colision);
+
                     }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
@@ -145,6 +145,7 @@ public class Jugador extends Actor {
                                         juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
                                         System.out.println("Entrando a  mapa2");
                                         break;
+
                                     case "EntradaMapa3":
                                         juego.dispose();
                                         juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
@@ -186,12 +187,10 @@ public class Jugador extends Actor {
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x,y-7,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        sonidoColision.play();
                         System.out.println(colision);
 
                         break;
-                    }else{
-                        colision=false;
-                        System.out.println(colision);
                     }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
@@ -250,11 +249,10 @@ public class Jugador extends Actor {
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x-7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        sonidoColision.play();
 
                         break;
-                    }else{
-                        colision=false;
-                        System.out.println(colision);
+
                     }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
@@ -313,11 +311,10 @@ public class Jugador extends Actor {
                 for(int b=0;b<rectangles.length;b++){
                     if(rectangles[b].overlaps(rectangle.set(x+7,y,sprite.getWidth(),sprite.getHeight()))){
                         colision=true;
+                        sonidoColision.play();
 
                         break;
-                    }else{
-                        colision=false;
-                        System.out.println(colision);
+
                     }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){

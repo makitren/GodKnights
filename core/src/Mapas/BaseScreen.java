@@ -3,6 +3,7 @@ package Mapas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -44,15 +45,17 @@ public class BaseScreen implements Screen {
     protected Table tableBotones;
     protected float w,h;
     protected BitmapFont bitmapFont;
+    protected  Music sonidoPuerta;
     protected int arriba,abajo,derecha,izquierda;
+
     boolean pulsado;
 
 
     public BaseScreen(Juego g){
-
         Gdx.app.log("Pixels Altura",Gdx.graphics.getHeight()+"");
         Gdx.app.log("Pixels Anchura",Gdx.graphics.getWidth()+"");
-
+        sonidoPuerta=Gdx.audio.newMusic(Gdx.files.internal("raw/puerta.mp3"));
+        sonidoPuerta.setVolume(10);
         game=g;
 
     }

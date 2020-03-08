@@ -301,6 +301,7 @@ public class Mapa3 extends BaseScreen {
 
         jugador.dispose();
         renderer.dispose();
+        sonidoPuerta.play();
         pantalla.dispose();
         }
     public void hacerMovimiento(char letra) {

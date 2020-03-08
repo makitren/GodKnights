@@ -8,17 +8,19 @@
         android:icon="@drawable/ic_launcher"
         android:isGame="true"
         android:label="@string/app_name"
-        android:theme="@style/GdxTheme">
-        <activity android:name=".AndroidLauncher"
+        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <activity android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AndroidLauncher"
+            android:exported="true"
+            android:screenOrientation="landscape"/>
 
     </application>
-
 
 </manifest>

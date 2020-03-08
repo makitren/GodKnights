@@ -291,6 +291,7 @@ public class Mapa2 extends BaseScreen {
 
     public void dispose() {
         jugador.dispose();
+        sonidoPuerta.play();
         renderer.dispose();
         pantalla.dispose();
     }
