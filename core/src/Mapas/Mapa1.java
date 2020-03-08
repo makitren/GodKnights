@@ -24,11 +24,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Colisiones;
 import actores.EntradaCasaInicial;
+import basededatos.BaseDeDatos;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -42,14 +44,15 @@ public class Mapa1 extends BaseScreen {
     private float posX, posY;
     private char letra;
 
-    public Mapa1(Juego g, float posicionPersonajeX,float posicionPersonajeY){
+    public Mapa1(Juego g, float posicionPersonajeX,float posicionPersonajeY, BaseDeDatos bd){
             super(g);
+            baseDeDatos=bd;
             this.juego=g;
             bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
-            arriba=0;
-            abajo=0;
-            derecha=0;
-            izquierda=0;
+             abajo=baseDeDatos.cargar()[0];
+            arriba=baseDeDatos.cargar()[1];
+            derecha=baseDeDatos.cargar()[2];
+            izquierda=baseDeDatos.cargar()[3];
 
             w=Gdx.graphics.getWidth();
             h=Gdx.graphics.getHeight();
@@ -74,7 +77,7 @@ public class Mapa1 extends BaseScreen {
             batch=new SpriteBatch();
         colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-             jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
+             jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego,baseDeDatos );
 
              System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
             System.out.println(mapHeightInTiles);
@@ -86,7 +89,11 @@ public class Mapa1 extends BaseScreen {
             System.out.println(WIDTH);
             System.out.println(HEIGHT);
             camera.setToOrtho(false, WIDTH,HEIGHT); //Establecemos la cámara, y le decimos cuanto tiene que ocupar. Doc:
+        /*
+        sonidoPuerta=Gdx.audio.newMusic(Gdx.files.internal("raw/puerta.mp3"));
+        sonidoPuerta.setVolume(10);
 
+         */
             camera.position.x=WIDTH/2;
             camera.position.y=HEIGHT/2;
             camera.position.set(WIDTH/2,HEIGHT/2,1);
@@ -121,6 +128,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.hacerAnimaciones('w');
                 pulsado=false;
                 arriba++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
 
             }
@@ -138,6 +146,7 @@ public class Mapa1 extends BaseScreen {
                 jugador.hacerAnimaciones('s');
                 pulsado=false;
                 abajo++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
             }
             @Override
@@ -155,6 +164,7 @@ public class Mapa1 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 derecha++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
             }
             @Override
@@ -172,6 +182,7 @@ public class Mapa1 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 izquierda++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
             }
             @Override
@@ -293,7 +304,7 @@ public class Mapa1 extends BaseScreen {
 
         public void dispose() {
             jugador.dispose();
-            //sonidoPuerta.play(); 
+            //sonidoPuerta.play();
             renderer.dispose();
             pantalla.dispose();
 
@@ -318,5 +329,6 @@ public class Mapa1 extends BaseScreen {
         public TiledMap getMap() {
             return map;
         }
+    
 
-    }
+}

@@ -18,6 +18,7 @@ import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Actores;
 import actores.Colisiones;
+import basededatos.BaseDeDatos;
 import personajes.Jugador;
 
 public class BaseScreen implements Screen {
@@ -47,6 +48,7 @@ public class BaseScreen implements Screen {
     protected BitmapFont bitmapFont;
     protected  Music sonidoPuerta;
     protected int arriba,abajo,derecha,izquierda;
+    protected BaseDeDatos baseDeDatos;
 
     boolean pulsado;
 

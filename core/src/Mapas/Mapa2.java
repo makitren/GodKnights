@@ -22,12 +22,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import actores.Colisiones;
 import actores.EntradaCasaMapa2;
 import actores.SalidaMapa2;
+import basededatos.BaseDeDatos;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -36,20 +38,22 @@ public class Mapa2 extends BaseScreen {
     private SpriteBatch batch;
     private EntradaCasaMapa2 ecm;
     private SalidaMapa2 sm;
+
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
     private float posX,posY;
     private char letra;
 
 
-    public Mapa2(Juego g,float posicionPersonajeX, float posicionPersonajeY){
+    public Mapa2(Juego g, float posicionPersonajeX, float posicionPersonajeY, BaseDeDatos bd){
         super(g);
+        baseDeDatos=bd;
         this.juego=g;
         bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
-        arriba=0;
-        abajo=0;
-        derecha=0;
-        izquierda=0;
+        abajo=baseDeDatos.cargar()[0];
+        arriba=baseDeDatos.cargar()[1];
+        derecha=baseDeDatos.cargar()[2];
+        izquierda=baseDeDatos.cargar()[3];
         w=Gdx.graphics.getWidth();
         h=Gdx.graphics.getHeight();
         this.posX=posicionPersonajeX;
@@ -73,7 +77,7 @@ public class Mapa2 extends BaseScreen {
         colisiones=new Colisiones();
         //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
         colisiones.checkCollision(map,w,h);
-        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/15 ,mapHeightInPixels/15,juego);
+        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/15 ,mapHeightInPixels/15,juego,baseDeDatos);
        //jugador.setBounds(480,500,mapWidthInPixels/20 ,mapHeightInPixels/20);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
@@ -128,6 +132,7 @@ public class Mapa2 extends BaseScreen {
                     jugador.hacerAnimaciones('w');
                     pulsado=false;
                 arriba++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
 
             }
@@ -143,8 +148,10 @@ public class Mapa2 extends BaseScreen {
 
                 hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
-                abajo++;
                 pulsado=false;
+                abajo++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
+
                 return true;
             }
             @Override
@@ -162,6 +169,7 @@ public class Mapa2 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 derecha++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
             }
             @Override
@@ -179,6 +187,7 @@ public class Mapa2 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 izquierda++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
 
                 return true;
             }
@@ -291,7 +300,6 @@ public class Mapa2 extends BaseScreen {
 
     public void dispose() {
         jugador.dispose();
-        sonidoPuerta.play();
         renderer.dispose();
         pantalla.dispose();
     }

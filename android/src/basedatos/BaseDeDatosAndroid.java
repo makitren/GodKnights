@@ -21,11 +21,13 @@ public class BaseDeDatosAndroid implements BaseDeDatos {
         Cursor c=db.query("numeroMovimientos",null,null,null,null,null,null);
 
        if(c.moveToFirst()){
-           puntuaciones[0]=c.getInt(c.getColumnIndex("movimientoAbajo"));
-           puntuaciones[1]=c.getInt(c.getColumnIndex("movimientoArriba"));
-           puntuaciones[2]=c.getInt(c.getColumnIndex("movimientoIzquierda"));
-           puntuaciones[3]=c.getInt(c.getColumnIndex("movimientoDerecha"));
+
+           puntuaciones[0]=c.getInt(c.getColumnIndex("movimientosAbajo"));
+           puntuaciones[1]=c.getInt(c.getColumnIndex("movimientosArriba"));
+           puntuaciones[2]=c.getInt(c.getColumnIndex("movimientosDerecha"));
+           puntuaciones[3]=c.getInt(c.getColumnIndex("movimientosIzquierda"));
        }
+       c.close();
        return puntuaciones;
     }
 

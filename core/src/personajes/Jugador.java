@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import Mapas.Mapa1;
@@ -21,6 +22,7 @@ import Mapas.Mapa2;
 import Mapas.Mapa3;
 import Mapas.Mapa4;
 import actores.Colisiones;
+import basededatos.BaseDeDatos;
 
 public class Jugador extends Actor {
     private float x,y;
@@ -51,12 +53,15 @@ public class Jugador extends Actor {
     private Colisiones colisiones;
      float anchoJugador, largoJugador;
     private Music sonidoColision;
+    BaseDeDatos baseDeDatos;
+
 
      private Juego juego;
-    public Jugador(TiledMap mapa, Colisiones col, OrthographicCamera c,float posicionPersonajeX, float posicionPersonajeY, float anchoJugador, float largoJugador, Juego juego) {
+    public Jugador(TiledMap mapa, Colisiones col, OrthographicCamera c, float posicionPersonajeX, float posicionPersonajeY, float anchoJugador, float largoJugador, Juego juego, BaseDeDatos bd) {
         this.colisiones=col;
         colision=false;
         this.juego=juego;
+        baseDeDatos=bd;
         this.x=posicionPersonajeX;
         this.y=posicionPersonajeY;
         this.anchoJugador=anchoJugador;
@@ -132,39 +137,39 @@ public class Jugador extends Actor {
                                 switch (colisiones.getObj2()[i].getName()){
                                     case "EntradaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                     case "SalidaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa1":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f,baseDeDatos));
                                         System.out.println("Entrando a  mapa2");
                                         break;
 
                                     case "EntradaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f,baseDeDatos));
                                         System.out.println("Entrando a mapa2");
                                         break;
 
                                     case "SalidaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f));
+                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f,baseDeDatos));
                                         System.out.println("Entrando a mapa4");
                                         break;
                                     case "EntradaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                 }
@@ -198,38 +203,38 @@ public class Jugador extends Actor {
                                 switch (colisiones.getObj2()[i].getName()){
                                     case "EntradaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                     case "SalidaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa1":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f,baseDeDatos));
                                         System.out.println("Entrando a  mapa2");
                                         break;
                                     case "EntradaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f,baseDeDatos));
                                         System.out.println("Entrando a mapa2");
                                         break;
 
                                     case "SalidaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f));
+                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f,baseDeDatos));
                                         System.out.println("Entrando a mapa4");
                                         break;
                                     case "EntradaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                 }
@@ -260,38 +265,38 @@ public class Jugador extends Actor {
                                 switch (colisiones.getObj2()[i].getName()){
                                     case "EntradaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                     case "SalidaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa1":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f,baseDeDatos));
                                         System.out.println("Entrando a  mapa2");
                                         break;
                                     case "EntradaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f,baseDeDatos));
                                         System.out.println("Entrando a mapa2");
                                         break;
 
                                     case "SalidaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f));
+                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f,baseDeDatos));
                                         System.out.println("Entrando a mapa4");
                                         break;
                                     case "EntradaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                 }
@@ -322,38 +327,38 @@ public class Jugador extends Actor {
                                 switch (colisiones.getObj2()[i].getName()){
                                     case "EntradaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                     case "SalidaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa1":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f,baseDeDatos));
                                         System.out.println("Entrando a  mapa2");
                                         break;
                                     case "EntradaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f));
+                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f,baseDeDatos));
                                         System.out.println("Entrando a mapa2");
                                         break;
 
                                     case "SalidaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f));
+                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f,baseDeDatos));
                                         System.out.println("Entrando a mapa4");
                                         break;
                                     case "EntradaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f));
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f));
+                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                 }

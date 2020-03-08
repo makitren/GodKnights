@@ -31,6 +31,7 @@ import com.mygdx.game.alfredomolinacalderon.Juego;
 import actores.Colisiones;
 import actores.EntradaMapa4;
 import actores.SalidaMapa4;
+import basededatos.BaseDeDatos;
 import escuchadores.TecladoJugador;
 import personajes.Jugador;
 
@@ -45,14 +46,15 @@ public class Mapa4 extends BaseScreen {
     private char letra;
 
 
-    public Mapa4(Juego g,float posicionPersonajeX, float posicionPersonajeY){
+    public Mapa4(Juego g, float posicionPersonajeX, float posicionPersonajeY, BaseDeDatos bd){
         super(g);
+        baseDeDatos=bd;
         this.juego=g;
         bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
-        arriba=0;
-        abajo=0;
-        derecha=0;
-        izquierda=0;
+        abajo=baseDeDatos.cargar()[0];
+        arriba=baseDeDatos.cargar()[1];
+        derecha=baseDeDatos.cargar()[2];
+        izquierda=baseDeDatos.cargar()[3];
         w=Gdx.graphics.getWidth();
         h=Gdx.graphics.getHeight();
         this.posX=posicionPersonajeX;
@@ -75,7 +77,7 @@ public class Mapa4 extends BaseScreen {
         camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
         colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
+        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego,baseDeDatos );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -133,6 +135,7 @@ public class Mapa4 extends BaseScreen {
                 pulsado=false;
 
                 arriba++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
 
             }
@@ -148,8 +151,10 @@ public class Mapa4 extends BaseScreen {
 
                 hacerMovimiento('s');
                 jugador.hacerAnimaciones('s');
-                abajo++;
                 pulsado=false;
+                abajo++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
+
                 return true;
             }
             @Override
@@ -167,6 +172,7 @@ public class Mapa4 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 derecha++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
                 return true;
             }
             @Override
@@ -184,6 +190,7 @@ public class Mapa4 extends BaseScreen {
                 System.out.println(jugador.getX());
                 pulsado=false;
                 izquierda++;
+                baseDeDatos.guardar(arriba,abajo,izquierda,derecha);
 
                 return true;
             }

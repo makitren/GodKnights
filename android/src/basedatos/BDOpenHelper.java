@@ -13,7 +13,7 @@ public class BDOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table numeroMovimientos(movimientosAbajo int(5) primary key, movimientosArriba int(5), movimientosDerecha int(5),movimientosIzquierda int(5))");
+        db.execSQL("create table numeroMovimientos(movimientosAbajo int(5) default 0 primary key, movimientosArriba int(5) default 0, movimientosDerecha int(5) default 0,movimientosIzquierda int(5) default 0)");
     }
 
     @Override
