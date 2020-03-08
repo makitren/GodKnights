@@ -48,13 +48,15 @@ public class Mapa1 extends BaseScreen {
             abajo=0;
             derecha=0;
             izquierda=0;
+            w=Gdx.graphics.getWidth();
+            h=Gdx.graphics.getHeight();
             this.posX=posicionPersonajeX;
             this.posY=posicionPersonajeY;
              map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
             renderer = new OrthogonalTiledMapRenderer(map,unitScale);
-            camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-            camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-            camera.update();
+
+            //camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+
              properties = map.getProperties();
             tileWidth = properties.get("tilewidth", Integer.class);
             tileHeight = properties.get("tileheight", Integer.class);
@@ -62,10 +64,16 @@ public class Mapa1 extends BaseScreen {
             mapHeightInTiles = properties.get("height", Integer.class);
             mapWidthInPixels = mapWidthInTiles * tileWidth;
             mapHeightInPixels = mapHeightInTiles * tileHeight;
-            batch=new SpriteBatch();
+            w=w/mapWidthInPixels;
+            h=h/mapHeightInPixels;
 
-            jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
-            System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
+        camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
+            batch=new SpriteBatch();
+        colisiones=new Colisiones();
+        colisiones.checkCollision(map,w,h);
+             jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
+
+             System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
             System.out.println(mapHeightInTiles);
             //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
 
@@ -188,31 +196,24 @@ public class Mapa1 extends BaseScreen {
         terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
 
-        colisiones=new Colisiones();
-        colisiones.checkCollision(map,jugador);
+
+
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
         Gdx.input.setInputProcessor(pantalla);
 
 
-            colisiones=new Colisiones();
-            colisiones.checkCollision(map,jugador);
 
 
             pantalla.setDebugAll(true);
             pantalla.addActor(jugador);
 
-
-
             for(int b=0;b<colisiones.getActores().length-1;b++){
                 pantalla.addActor(colisiones.getActores()[b]);
+                System.out.println(colisiones.getActores().length+"HOLA");
 
             }
-
-            System.out.println(colisiones.getActores().length);
-
-
 
 
         }
@@ -260,9 +261,6 @@ public class Mapa1 extends BaseScreen {
             if(Gdx.input.isButtonPressed(0)&&!pulsado){
                 jugador.moverJugador(letra);
             }
-
-            jugador.checkCollision();
-
             renderer.setView(camera);
 
             pantalla.act(Gdx.graphics.getDeltaTime());

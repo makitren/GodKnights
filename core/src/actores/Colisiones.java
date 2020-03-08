@@ -19,22 +19,24 @@ public class Colisiones {
     private Rectangle[]salida;
 
 
-    public void checkCollision(TiledMap map, Jugador personaje) {
-        jugador=new Rectangle();
-        //this.widthEsc=width;
-        //this.heightEsc=height;
-        jugador.set(personaje.getX(),personaje.getY(),personaje.getWidth(),personaje.getHeight());
+    public void checkCollision(TiledMap map,float w,float h) {
+
         MapObjects mons = map.getLayers().get("Colisionables").getObjects();
+       /*
+        jugador=new Rectangle();
+        jugador.set(jugador.getX(),jugador.getY(),jugador.getWidth(),jugador.getHeight());
+*/
        // MapObjects mons2 = map.getLayers().get("Entrada").getObjects();
         actores=new Actor[mons.getCount()];
         rect=new Rectangle[mons.getCount()];
         for (int i = 0;i < mons.getCount(); i++) {
             RectangleMapObject obj1 = (RectangleMapObject) mons.get(i);
             Rectangle rect1 = obj1.getRectangle();
-            rect[i]=new Rectangle((rect1.x*2),(rect1.y*2),(rect1.width*2),(rect1.height*2));
+            rect[i]=rect1;
+            rect[i]=new Rectangle((rect1.x*w),(rect1.y*h),(rect1.width*w),(rect1.height*h));
 
             actores[i]=new Actor();
-            actores[i].setBounds(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
+            actores[i].setBounds(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);
             actores[i].setTouchable(Touchable.disabled);
         }
         MapObjects mons2=map.getLayers().get("Salida").getObjects();
@@ -46,9 +48,9 @@ public class Colisiones {
             //System.out.println("Nombre: "+obj1.getName());
             obj2[i]=obj1;
             Rectangle rect1=obj1.getRectangle();
-            salida[i]=new Rectangle(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
+            salida[i]=new Rectangle(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);
             actores2[i]=new Actor();
-            actores2[i].setBounds(rect1.x*2,rect1.y*2,rect1.width*2,rect1.height*2);
+            actores2[i].setBounds(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);
 
         }
 

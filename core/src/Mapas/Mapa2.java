@@ -50,13 +50,14 @@ public class Mapa2 extends BaseScreen {
         abajo=0;
         derecha=0;
         izquierda=0;
+        w=Gdx.graphics.getWidth();
+        h=Gdx.graphics.getHeight();
         this.posX=posicionPersonajeX;
         this.posY=posicionPersonajeY;
          map = new TmxMapLoader().load("Mapas/MapaInicialFinal.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-        camera.update();
+
+
          properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -64,9 +65,15 @@ public class Mapa2 extends BaseScreen {
         mapHeightInTiles = properties.get("height", Integer.class);
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
+        w=w/mapWidthInPixels;
+        h=h/mapHeightInPixels;
+
+        camera = new OrthographicCamera(mapWidthInPixels,mapHeightInTiles);
         batch=new SpriteBatch();
+        colisiones=new Colisiones();
         //Crear variable para posicionPersonajeX e Y, para que segun desde que mapa entre, se origine el jugador en un lado u otro.
-        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/15 ,mapHeightInPixels/15,juego);
+        colisiones.checkCollision(map,w,h);
+        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/15 ,mapHeightInPixels/15,juego);
        //jugador.setBounds(480,500,mapWidthInPixels/20 ,mapHeightInPixels/20);
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
@@ -197,8 +204,6 @@ public class Mapa2 extends BaseScreen {
         terrainLayer = (TiledMapTileLayer) mapLayers.get("Suelo");
         terrainLayer2 = (TiledMapTileLayer) mapLayers.get("Cosas");
 
-        colisiones=new Colisiones();
-        colisiones.checkCollision(map,jugador);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
@@ -212,9 +217,9 @@ public class Mapa2 extends BaseScreen {
 
        for(int b=0;b<colisiones.getActores().length-1;b++){
             pantalla.addActor(colisiones.getActores()[b]);
-
+           System.out.println(colisiones.getActores().length+"COLISIONES2");
         }
-        System.out.println(colisiones.getActores().length);
+
 
 
         //System.out.println(jugador.getX()+"Jugador");
@@ -258,7 +263,6 @@ public class Mapa2 extends BaseScreen {
             jugador.moverJugador(letra);
         }
 
-        jugador.checkCollision();
 
         renderer.setView(camera);
         pantalla.act(Gdx.graphics.getDeltaTime());

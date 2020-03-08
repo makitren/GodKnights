@@ -53,14 +53,15 @@ public class Mapa4 extends BaseScreen {
         abajo=0;
         derecha=0;
         izquierda=0;
+        w=Gdx.graphics.getWidth();
+        h=Gdx.graphics.getHeight();
         this.posX=posicionPersonajeX;
         this.posY=posicionPersonajeY;
         shapeRenderer=new ShapeRenderer();
         map = new TmxMapLoader().load("Mapas/Mazmorra1Final.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,unitScale);
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
-        camera.update();
+
+
         properties = map.getProperties();
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
@@ -69,8 +70,12 @@ public class Mapa4 extends BaseScreen {
         mapWidthInPixels = mapWidthInTiles * tileWidth;
         mapHeightInPixels = mapHeightInTiles * tileHeight;
         batch=new SpriteBatch();
-
-        jugador=new Jugador(map,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
+        w=w/mapWidthInPixels;
+        h=h/mapHeightInPixels;
+        camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
+        colisiones=new Colisiones();
+        colisiones.checkCollision(map,w,h);
+        jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
@@ -199,8 +204,6 @@ public class Mapa4 extends BaseScreen {
         tableBotones.add(botonDerecha).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         pantalla.addActor(tableBotones);
 
-        colisiones=new Colisiones();
-        colisiones.checkCollision(map,jugador);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(new TecladoJugador(jugador));
@@ -262,7 +265,6 @@ public class Mapa4 extends BaseScreen {
         batch.begin();
         jugador.dibujarConHitbox(batch);
         batch.end();
-        jugador.checkCollision();
         renderer.getBatch().begin();
         renderer.renderTileLayer(terrainLayer2);
         renderer.getBatch().end();
