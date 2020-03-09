@@ -23,7 +23,7 @@ public class Juego extends Game {
 	@Override
 	public void create() {
 			this.setPantallaActual(new Mapa1(this,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
-
+		System.out.println("Estou haciendo esto");
 	}
 
 

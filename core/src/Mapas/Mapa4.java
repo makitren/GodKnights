@@ -77,7 +77,7 @@ public class Mapa4 extends BaseScreen {
         camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
         colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
-        mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa1.mp3"));
+        mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa4.mp3"));
         mapaSonido.setVolume(1);
         jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego,baseDeDatos );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth

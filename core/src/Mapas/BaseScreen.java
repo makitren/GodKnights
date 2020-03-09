@@ -38,34 +38,33 @@ public class BaseScreen implements Screen {
     protected OrthographicCamera camera;
     protected Jugador jugador;
     public static final float unitScale = 1 / 32f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
-    public static final float pixelsPorCuadro=32f;
+    public static final float pixelsPorCuadro = 32f;
     protected OrthogonalTiledMapRenderer renderer;
     protected ShapeRenderer shapeRenderer;
-    protected TiledMapTileLayer terrainLayer,terrainLayer2,terrainLayer3;
+    protected TiledMapTileLayer terrainLayer, terrainLayer2, terrainLayer3;
     protected Colisiones colisiones;
     protected Table tableBotones;
-    protected float w,h;
+    protected float w, h;
     protected BitmapFont bitmapFont;
-    protected  Music sonidoPuerta;
+    protected Music sonidoPuerta;
     protected Music mapaSonido;
 
-    protected int arriba,abajo,derecha,izquierda;
+    protected int arriba, abajo, derecha, izquierda;
     protected BaseDeDatos baseDeDatos;
     boolean pulsado;
 
 
-    public BaseScreen(Juego g){
-        Gdx.app.log("Pixels Altura",Gdx.graphics.getHeight()+"");
-        Gdx.app.log("Pixels Anchura",Gdx.graphics.getWidth()+"");
-        sonidoPuerta=Gdx.audio.newMusic(Gdx.files.internal("raw/puerta.mp3"));
+    public BaseScreen(Juego g) {
+        Gdx.app.log("Pixels Altura", Gdx.graphics.getHeight() + "");
+        Gdx.app.log("Pixels Anchura", Gdx.graphics.getWidth() + "");
+        sonidoPuerta = Gdx.audio.newMusic(Gdx.files.internal("raw/puerta.mp3"));
         sonidoPuerta.setVolume(10);
 
 
-
-        game=g;
+        game = g;
 
     }
-   
+
     @Override
     public void show() {
     }
@@ -76,7 +75,6 @@ public class BaseScreen implements Screen {
     }
 
 
-
     @Override
     public void resize(int width, int height) {
 
@@ -84,8 +82,6 @@ public class BaseScreen implements Screen {
 
     @Override
     public void pause() {
-    mapaSonido.stop();
-    mapaSonido.dispose();
     }
 
     @Override
@@ -93,10 +89,9 @@ public class BaseScreen implements Screen {
 
     }
 
+
     @Override
     public void hide() {
-    mapaSonido.stop();
-        mapaSonido.dispose();
     }
 
     @Override
@@ -105,8 +100,4 @@ public class BaseScreen implements Screen {
         renderer.dispose();
         pantalla.dispose();
     }
-    public Music getMapaSonido() {
-        return mapaSonido;
-    }
-
 }

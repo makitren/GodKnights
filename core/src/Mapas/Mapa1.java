@@ -291,8 +291,7 @@ public class Mapa1 extends BaseScreen {
 
         @Override
         public void pause() {
-            mapaSonido.dispose();
-            mapaSonido.stop();
+
         }
 
         @Override
@@ -302,12 +301,11 @@ public class Mapa1 extends BaseScreen {
 
         @Override
         public void hide() {
-            mapaSonido.dispose();
-            mapaSonido.stop();
+
         }
 
         public void dispose() {
-      
+
             jugador.dispose();
             sonidoPuerta.play();
             mapaSonido.dispose();
