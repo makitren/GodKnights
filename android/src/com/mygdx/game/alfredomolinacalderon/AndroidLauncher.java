@@ -9,6 +9,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
 import basedatos.BaseDeDatosAndroid;
+import basededatos.BaseDeDatos;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -21,6 +22,15 @@ public class AndroidLauncher extends AndroidApplication {
 	}
 
 	@Override
+	protected void onStop() {
+		super.onStop();
+
+		BaseDeDatos bd=new BaseDeDatosAndroid(this);
+		Juego juego=new Juego(bd);
+		//juego.pararMusica();
+	}
+
+	@Override
 	public void onBackPressed() {
 		AlertDialog.Builder alert=new AlertDialog.Builder(this);
 		alert.setMessage("¿Quieres salir de Godknights?");
@@ -30,6 +40,7 @@ public class AndroidLauncher extends AndroidApplication {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
+
 			}
 		});
 		alert.setNegativeButton("No", new DialogInterface.OnClickListener() {

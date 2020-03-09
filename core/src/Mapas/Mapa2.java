@@ -82,7 +82,8 @@ public class Mapa2 extends BaseScreen {
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
         //MUY IMPORTANTE, DURANTE LA FASE DE ORDENADOR, EL PERSONAJE ESTARÁ EN 280,100,/20,/20, PERO EN MOVIL ESTARÁ EN 1080,150,/10,/5
-
+        mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa2.mp3"));
+        mapaSonido.setVolume(1);
         WIDTH = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth(); //Obtenemos desde el mapa el número de tiles de ancho de la 1º Capa
         HEIGHT = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight(); //Obtenemos desde el mapa el número de tiles de alto de la 1º Capa
         System.out.println(WIDTH);
@@ -228,7 +229,7 @@ public class Mapa2 extends BaseScreen {
             pantalla.addActor(colisiones.getActores()[b]);
            System.out.println(colisiones.getActores().length+"COLISIONES2");
         }
-       mapa2.play();
+        mapaSonido.play();
 
 
 
@@ -302,7 +303,7 @@ public class Mapa2 extends BaseScreen {
     public void dispose() {
         jugador.dispose();
         sonidoPuerta.play();
-        mapa2.stop();
+        mapaSonido.dispose();
         renderer.dispose();
         pantalla.dispose();
     }

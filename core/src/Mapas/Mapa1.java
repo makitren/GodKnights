@@ -60,7 +60,8 @@ public class Mapa1 extends BaseScreen {
             this.posY=posicionPersonajeY;
              map = new TmxMapLoader().load("Mapas/InteriorCasaInicialFinal.tmx");
             renderer = new OrthogonalTiledMapRenderer(map,unitScale);
-
+        mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa1.mp3"));
+        mapaSonido.setVolume(1);
             //camera.translate(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 
              properties = map.getProperties();
@@ -228,7 +229,7 @@ public class Mapa1 extends BaseScreen {
                 System.out.println(colisiones.getActores().length+"HOLA");
 
             }
-            mapa1.play();
+
 
 
         }
@@ -236,7 +237,7 @@ public class Mapa1 extends BaseScreen {
 
         @Override
         public void show() {
-
+            mapaSonido.play();
 
         }
 
@@ -290,7 +291,8 @@ public class Mapa1 extends BaseScreen {
 
         @Override
         public void pause() {
-
+            mapaSonido.dispose();
+            mapaSonido.stop();
         }
 
         @Override
@@ -300,16 +302,17 @@ public class Mapa1 extends BaseScreen {
 
         @Override
         public void hide() {
-
+            mapaSonido.dispose();
+            mapaSonido.stop();
         }
 
         public void dispose() {
+      
             jugador.dispose();
             sonidoPuerta.play();
-            mapa1.stop();
+            mapaSonido.dispose();
             renderer.dispose();
             pantalla.dispose();
-
         }
     public void hacerMovimiento(char letra){
         switch (letra){

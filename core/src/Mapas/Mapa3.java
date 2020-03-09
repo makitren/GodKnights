@@ -70,7 +70,8 @@ public class Mapa3 extends BaseScreen {
             mapHeightInPixels = mapHeightInTiles * tileHeight;
             w=w/mapWidthInPixels;
             h=h/mapHeightInPixels;
-
+            mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa3.mp3"));
+            mapaSonido.setVolume(1);
             camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
             batch=new SpriteBatch();
             colisiones=new Colisiones();
@@ -222,6 +223,7 @@ public class Mapa3 extends BaseScreen {
 
             }
             System.out.println(colisiones.getActores().length);
+            mapaSonido.play();
         }
 
 
@@ -275,7 +277,6 @@ public class Mapa3 extends BaseScreen {
         if(Gdx.input.isButtonPressed(0)&&!pulsado){
             jugador.moverJugador(letra);
         }
-        mapa3.play();
 
 
         renderer.setView(camera);
@@ -309,7 +310,7 @@ public class Mapa3 extends BaseScreen {
 
         jugador.dispose();
         sonidoPuerta.play();
-        mapa3.stop();
+        mapaSonido.dispose();
         renderer.dispose();
         pantalla.dispose();
         }

@@ -77,6 +77,8 @@ public class Mapa4 extends BaseScreen {
         camera = new OrthographicCamera(mapWidthInPixels,mapHeightInPixels);
         colisiones=new Colisiones();
         colisiones.checkCollision(map,w,h);
+        mapaSonido=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa1.mp3"));
+        mapaSonido.setVolume(1);
         jugador=new Jugador(map,colisiones,camera,posicionPersonajeX,posicionPersonajeY,mapWidthInPixels/10 ,mapHeightInPixels/5,juego,baseDeDatos );
         System.out.println(mapWidthInTiles);//El sout de mapWidthInTiles y Heigh da la altura y anchura del mapa, el de Gdx da el viewportWidth y Heigth
         System.out.println(mapHeightInTiles);
@@ -232,8 +234,8 @@ public class Mapa4 extends BaseScreen {
         }
 
         System.out.println(colisiones.getActores().length);
+        mapaSonido.play();
 
-        mapa4.play();
 
     }
 
@@ -323,7 +325,7 @@ public class Mapa4 extends BaseScreen {
     public void dispose() {
         jugador.dispose();
         sonidoPuerta.play();
-        mapa4.stop();
+        mapaSonido.dispose();
         renderer.dispose();
         pantalla.dispose();
     }

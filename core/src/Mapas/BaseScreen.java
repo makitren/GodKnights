@@ -47,10 +47,8 @@ public class BaseScreen implements Screen {
     protected float w,h;
     protected BitmapFont bitmapFont;
     protected  Music sonidoPuerta;
-    protected Music mapa1;
-    protected Music mapa2;
-    protected Music mapa3;
-    protected Music mapa4;
+    protected Music mapaSonido;
+
     protected int arriba,abajo,derecha,izquierda;
     protected BaseDeDatos baseDeDatos;
     boolean pulsado;
@@ -61,14 +59,8 @@ public class BaseScreen implements Screen {
         Gdx.app.log("Pixels Anchura",Gdx.graphics.getWidth()+"");
         sonidoPuerta=Gdx.audio.newMusic(Gdx.files.internal("raw/puerta.mp3"));
         sonidoPuerta.setVolume(10);
-        mapa1=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa1.mp3"));
-        mapa1.setVolume(10);
-        mapa2=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa2.mp3"));
-        mapa2.setVolume(10);
-        mapa3=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa3.mp3"));
-        mapa3.setVolume(10);
-        mapa4=Gdx.audio.newMusic(Gdx.files.internal("raw/mapa4.mp3"));
-        mapa4.setVolume(10);
+
+
 
         game=g;
 
@@ -84,6 +76,7 @@ public class BaseScreen implements Screen {
     }
 
 
+
     @Override
     public void resize(int width, int height) {
 
@@ -91,7 +84,8 @@ public class BaseScreen implements Screen {
 
     @Override
     public void pause() {
-
+    mapaSonido.stop();
+    mapaSonido.dispose();
     }
 
     @Override
@@ -101,7 +95,8 @@ public class BaseScreen implements Screen {
 
     @Override
     public void hide() {
-
+    mapaSonido.stop();
+        mapaSonido.dispose();
     }
 
     @Override
@@ -109,6 +104,9 @@ public class BaseScreen implements Screen {
         jugador.dispose();
         renderer.dispose();
         pantalla.dispose();
+    }
+    public Music getMapaSonido() {
+        return mapaSonido;
     }
 
 }
