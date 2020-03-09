@@ -233,7 +233,7 @@ public class Mapa4 extends BaseScreen {
 
         System.out.println(colisiones.getActores().length);
 
-
+        mapa4.play();
 
     }
 
@@ -322,6 +322,8 @@ public class Mapa4 extends BaseScreen {
 
     public void dispose() {
         jugador.dispose();
+        sonidoPuerta.play();
+        mapa4.stop();
         renderer.dispose();
         pantalla.dispose();
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="36" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="50">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="36" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="51">
  <tileset firstgid="1" source="MapaInicialResize.tsx"/>
  <layer id="1" name="Suelo" width="36" height="24" locked="1">
   <data encoding="csv">
@@ -92,7 +92,8 @@
   <object id="40" x="582.847" y="162.63" width="21.3333" height="45.6797"/>
   <object id="41" x="1136.79" y="191.414" width="17.3333" height="541.333"/>
   <object id="46" x="161.333" y="34.6667" width="96" height="37.3333"/>
-  <object id="47" x="1161.33" y="186.667" width="85.3333" height="66.6667"/>
+  <object id="47" x="159.997" y="312" width="85.3333" height="66.6667"/>
+  <object id="50" x="302.667" y="320" width="68" height="58.6667"/>
  </objectgroup>
  <objectgroup id="6" name="Salida" locked="1">
   <object id="44" name="EntradaMapa2" x="252.763" y="348.156" width="40.249" height="31.9928"/>

@@ -29,6 +29,7 @@ public class TecladoJugador implements InputProcessor {
             case Input.Keys.W:
                 jugador.hacerAnimaciones('w');
                 break;
+
            /*
             case Input.Keys.SPACE:
                 jugador.atacar();

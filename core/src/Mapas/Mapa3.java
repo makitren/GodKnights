@@ -275,6 +275,7 @@ public class Mapa3 extends BaseScreen {
         if(Gdx.input.isButtonPressed(0)&&!pulsado){
             jugador.moverJugador(letra);
         }
+        mapa3.play();
 
 
         renderer.setView(camera);
@@ -307,6 +308,8 @@ public class Mapa3 extends BaseScreen {
     public void dispose() {
 
         jugador.dispose();
+        sonidoPuerta.play();
+        mapa3.stop();
         renderer.dispose();
         pantalla.dispose();
         }

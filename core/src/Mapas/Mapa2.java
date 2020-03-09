@@ -228,6 +228,7 @@ public class Mapa2 extends BaseScreen {
             pantalla.addActor(colisiones.getActores()[b]);
            System.out.println(colisiones.getActores().length+"COLISIONES2");
         }
+       mapa2.play();
 
 
 
@@ -300,6 +301,8 @@ public class Mapa2 extends BaseScreen {
 
     public void dispose() {
         jugador.dispose();
+        sonidoPuerta.play();
+        mapa2.stop();
         renderer.dispose();
         pantalla.dispose();
     }

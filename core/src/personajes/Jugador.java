@@ -123,80 +123,77 @@ public class Jugador extends Actor {
         switch (direccion){
             case 'w':
                 //Cambio posición del jugador, todavía no cambia nada visualmente
-                for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y+7,sprite.getWidth(),sprite.getHeight()))){
-                        colision=true;
+                for(int b=0;b<rectangles.length;b++) {
+                    if (rectangles[b].overlaps(rectangle.set(x, y + 3, sprite.getWidth(), sprite.getHeight()))) {
+                        colision = true;
                         sonidoColision.play();
-                        System.out.println(colision);
                         break;
-
+                    } else {
+                        colision = false;
                     }
-                    if(colision==false){
-                        for (int i=0;i<colisiones.getSalida().length;i++){
-                            if(colisiones.getSalida()[i].overlaps(rectangle.set(x,y,anchoJugador,largoJugador))){
-                                switch (colisiones.getObj2()[i].getName()){
+                }
+                    if(colision==false) {
+                        for (int i = 0; i < colisiones.getSalida().length; i++) {
+                            if (colisiones.getSalida()[i].overlaps(rectangle.set(x, y, anchoJugador, largoJugador))) {
+                                switch (colisiones.getObj2()[i].getName()) {
                                     case "EntradaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa1(this.juego, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getWidth() / 6.857f, baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                     case "SalidaMapa2":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/7.4f,Gdx.graphics.getWidth()/16.857f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa3(this.juego, Gdx.graphics.getWidth() / 7.4f, Gdx.graphics.getWidth() / 16.857f, baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa1":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/4.414f,Gdx.graphics.getHeight()/2.2f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa2(this.juego, Gdx.graphics.getWidth() / 4.414f, Gdx.graphics.getHeight() / 2.2f, baseDeDatos));
                                         System.out.println("Entrando a  mapa2");
                                         break;
 
                                     case "EntradaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa2(this.juego,Gdx.graphics.getWidth()/1.66f,Gdx.graphics.getWidth()/2.4609f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa2(this.juego, Gdx.graphics.getWidth() / 1.66f, Gdx.graphics.getWidth() / 2.4609f, baseDeDatos));
                                         System.out.println("Entrando a mapa2");
                                         break;
 
                                     case "SalidaMapa3":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa4(this.juego,Gdx.graphics.getWidth()/44.58f,Gdx.graphics.getWidth()/3.057f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa4(this.juego, Gdx.graphics.getWidth() / 44.58f, Gdx.graphics.getWidth() / 3.057f, baseDeDatos));
                                         System.out.println("Entrando a mapa4");
                                         break;
                                     case "EntradaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa3(this.juego, Gdx.graphics.getWidth() / 2.08f, Gdx.graphics.getWidth() / 4.457f, baseDeDatos));
                                         System.out.println("Entrando a mapa3");
                                         break;
                                     case "SalidaMapa4":
                                         juego.dispose();
-                                        juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
+                                        juego.setPantallaActual(new Mapa1(this.juego, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getWidth() / 6.857f, baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
                                 }
                             }
 
                         }
-                    }else {
-                        System.out.println("No detectado");
-                        colision = false;
-                    }
-
-                }
-
-                if(colision==false){
-                    y=y+3;
+                        y = y + 3;
+                    }else{
                 }
 
                 break;
             case 's':
-                for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x,y-7,sprite.getWidth(),sprite.getHeight()))){
-                        colision=true;
+                for(int b=0;b<rectangles.length;b++) {
+                    if (rectangles[b].overlaps(rectangle.set(x, y -3, sprite.getWidth(), sprite.getHeight()))) {
+                        colision = true;
                         sonidoColision.play();
                         System.out.println(colision);
-
                         break;
+                    } else {
+                        System.out.println("No detectado");
+                        colision = false;
                     }
+                }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
                             if(colisiones.getSalida()[i].overlaps(rectangle.set(x,y,anchoJugador,largoJugador))){
@@ -241,24 +238,23 @@ public class Jugador extends Actor {
                             }
 
                         }
-                    }else {
-                        System.out.println("No detectado");
-                        colision = false;
+                        y=y-3;
+                    }else{
                     }
-                }
-                if(colision==false){
-                    y=y-3;
-                }
+
                 break;
             case 'a':
-                for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x-7,y,sprite.getWidth(),sprite.getHeight()))){
-                        colision=true;
+                for(int b=0;b<rectangles.length;b++) {
+                    if (rectangles[b].overlaps(rectangle.set(x-3, y , sprite.getWidth(), sprite.getHeight()))) {
+                        colision = true;
                         sonidoColision.play();
-
+                        System.out.println(colision);
                         break;
-
+                    } else {
+                        System.out.println("No detectado");
+                        colision = false;
                     }
+                }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
                             if(colisiones.getSalida()[i].overlaps(rectangle.set(x,y,anchoJugador,largoJugador))){
@@ -303,24 +299,23 @@ public class Jugador extends Actor {
                             }
 
                         }
-                    }else {
-                        System.out.println("No detectado");
-                        colision = false;
+                        x=x-3;
+                    }else{
                     }
-                }
-                if(colision==false){
-                    x=x-3;
-                }
+
                 break;
             case 'd':
-                for(int b=0;b<rectangles.length;b++){
-                    if(rectangles[b].overlaps(rectangle.set(x+7,y,sprite.getWidth(),sprite.getHeight()))){
-                        colision=true;
+                for(int b=0;b<rectangles.length;b++) {
+                    if (rectangles[b].overlaps(rectangle.set(x+3, y , sprite.getWidth(), sprite.getHeight()))) {
+                        colision = true;
                         sonidoColision.play();
-
+                        System.out.println(colision);
                         break;
-
+                    } else {
+                        System.out.println("No detectado");
+                        colision = false;
                     }
+                }
                     if(colision==false){
                         for (int i=0;i<colisiones.getSalida().length;i++){
                             if(colisiones.getSalida()[i].overlaps(rectangle.set(x,y,anchoJugador,largoJugador))){
@@ -365,14 +360,10 @@ public class Jugador extends Actor {
                             }
 
                         }
-                    }else {
-                        System.out.println("No detectado");
-                        colision = false;
+                        x=x+3;
+                    }else{
                     }
-                }
-                if(colision==false){
-                    x=x+3;
-                }
+
                 break;
         }
     }
