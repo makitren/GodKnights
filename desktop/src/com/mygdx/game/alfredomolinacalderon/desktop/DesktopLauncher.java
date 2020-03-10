@@ -8,6 +8,6 @@ import com.mygdx.game.alfredomolinacalderon.Juego;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Juego(), config);
+		///ew LwjglApplication(new Juego(), config);
 	}
 }

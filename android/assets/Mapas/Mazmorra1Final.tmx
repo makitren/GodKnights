@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="39">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="left-down" compressionlevel="0" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="52">
  <tileset firstgid="1" source="Mazmorra1Resize.tsx"/>
  <layer id="1" name="suelo" width="20" height="12" locked="1">
   <data encoding="csv">
@@ -22,25 +22,25 @@
 1,2,3,13,13,6,7,8,13,13,11,12,13,13,13,16,17,18,19,20,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,42,0,44,45,46,0,0,0,0,0,0,0,0,0,0,0,42,0,0,
-0,0,0,0,0,0,0,0,0,70,71,72,0,0,0,0,0,42,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,159,160,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,189,190,191,192,193,194,0,0,0,0,159,160,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,62,0,0,
-0,0,0,0,0,0,0,0,189,190,191,192,193,194,0,0,0,42,199,200,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,0,0,
+0,0,0,0,0,0,0,0,0,70,71,72,0,0,0,221,221,42,0,0,
+0,0,221,0,221,0,0,0,0,0,0,0,0,0,221,0,0,0,159,160,
+0,0,221,0,221,221,221,0,221,221,0,0,0,0,221,221,0,0,0,0,
+0,0,221,0,0,0,221,0,221,0,0,0,0,0,0,0,0,0,0,0,
+0,0,221,221,221,221,221,0,189,190,191,192,193,194,0,0,0,0,159,160,
+0,0,0,0,0,0,221,0,0,0,0,0,0,0,221,221,221,62,0,0,
+0,0,0,0,0,0,221,0,189,190,191,192,193,194,0,0,0,42,199,200,
+0,0,0,0,0,0,221,0,0,0,0,0,0,0,0,0,0,42,0,0,
 221,222,223,224,225,0,0,0,0,0,0,0,0,0,0,0,0,62,0,0
 </data>
  </layer>
- <objectgroup color="#aa0000" id="3" name="Colisionables">
+ <objectgroup color="#aa0000" id="3" name="Colisionables" locked="1">
   <object id="1" x="112.535" y="65.7054" width="61.513" height="39.4865"/>
   <object id="2" x="-28.8151" y="33.506" width="668.049" height="27.0899"/>
   <object id="3" x="38.4962" y="64.1604" width="19.961" height="65.5959"/>
   <object id="4" x="309.498" y="98.4153" width="50.365" height="48.5327"/>
   <object id="5" x="446.743" y="97.9997" width="32.034" height="28.7104"/>
-  <object id="6" x="256.113" y="225.839" width="189.111" height="49.7566"/>
-  <object id="7" x="254.586" y="292.58" width="192.972" height="44.2286"/>
+  <object id="6" x="256.78" y="225.839" width="188.444" height="33.0899"/>
+  <object id="7" x="256.586" y="299.247" width="190.972" height="24.8953"/>
   <object id="9" x="4.85157" y="289.722" width="154.17" height="29.2286"/>
   <object id="10" x="3.56447" y="352.882" width="153.698" height="27.0899"/>
   <object id="11" x="551.4" y="225.228" width="17.8223" height="165.929"/>
@@ -48,14 +48,26 @@
   <object id="13" x="571.028" y="128.654" width="74.966" height="30.6082"/>
   <object id="14" x="555.648" y="228.987" width="83.392" height="29.7104"/>
   <object id="15" x="-9.12893" y="2.3648" width="12.1192" height="377.895"/>
-  <object id="16" x="-5.451" y="372.76" width="647.887" height="15.6837"/>
+  <object id="16" x="-5.451" y="383.427" width="647.887" height="15.6837"/>
   <object id="17" x="632.336" y="158.975" width="7.84183" height="70.5764"/>
   <object id="21" x="3.56447" y="353.882" width="152.698" height="26.0899"/>
   <object id="25" x="703" y="5" width="151" height="130"/>
   <object id="38" x="741" y="-99" width="58" height="53"/>
  </objectgroup>
- <objectgroup id="6" name="Salida" locked="1">
+ <objectgroup id="6" name="Salida">
   <object id="22" name="EntradaMapa4" x="2.6234" y="61.5575" width="36.9723" height="37.8702"/>
   <object id="23" name="SalidaMapa4" x="583.95" y="158.177" width="69.0829" height="71.0999"/>
+  <object id="40" name="Muerto" x="68.6667" y="131.333" width="25.3333" height="122"/>
+  <object id="41" name="Muerto" x="96.6667" y="226.667" width="125.333" height="25.3333"/>
+  <object id="42" name="Muerto" x="130.667" y="130" width="26" height="57.3333"/>
+  <object id="43" name="Muerto" x="159.333" y="160.667" width="61.3333" height="28"/>
+  <object id="44" name="Muerto" x="194" y="163.333" width="27.3333" height="183.333"/>
+  <object id="45" name="Muerto" x="241.333" y="453.333" width="28" height="23.3333"/>
+  <object id="46" name="Muerto" x="260" y="163.333" width="53.3333" height="24.6667"/>
+  <object id="47" name="Muerto" x="260.667" y="186.667" width="22.6667" height="34"/>
+  <object id="48" name="Muerto" x="450.667" y="256.667" width="89.3333" height="27.3333"/>
+  <object id="49" name="Muerto" x="450.667" y="132" width="26.6667" height="55.3333"/>
+  <object id="50" name="Muerto" x="478.667" y="162.667" width="30.6667" height="24.6667"/>
+  <object id="51" name="Muerto" x="484" y="100" width="56.6667" height="23.3333"/>
  </objectgroup>
 </map>

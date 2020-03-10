@@ -3,6 +3,9 @@ package com.mygdx.game.alfredomolinacalderon;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -15,15 +18,18 @@ import basededatos.BaseDeDatos;
 
 public class AndroidLauncher extends AndroidApplication {
 	private Music musica;
-
+	private Juego j;
+	private boolean funcional=false;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Juego(new BaseDeDatosAndroid(this)), config);
-
-
-
+		System.out.println("mecagondios");
+		j=new Juego(new BaseDeDatosAndroid(this));
+		if (!funcional) {
+			funcional=true;
+			initialize(j, config);
+		}
 	}
 	@Override
 	public void onBackPressed() {
@@ -47,4 +53,11 @@ public class AndroidLauncher extends AndroidApplication {
 		alert.show();
 	}
 
+	@Override
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (!funcional) {
+		    Toast.makeText(this, "nfjdsngjns", Toast.LENGTH_LONG).show();
+		}
+	}
 }

@@ -22,11 +22,7 @@ public class Colisiones {
     public void checkCollision(TiledMap map,float w,float h) {
 
         MapObjects mons = map.getLayers().get("Colisionables").getObjects();
-       /*
-        jugador=new Rectangle();
-        jugador.set(jugador.getX(),jugador.getY(),jugador.getWidth(),jugador.getHeight());
-*/
-       // MapObjects mons2 = map.getLayers().get("Entrada").getObjects();
+
         actores=new Actor[mons.getCount()];
         rect=new Rectangle[mons.getCount()];
         for (int i = 0;i < mons.getCount(); i++) {
@@ -45,7 +41,7 @@ public class Colisiones {
         actores2=new Actor[mons2.getCount()];
         for (int i=0; i<mons2.getCount();i++){
             RectangleMapObject obj1=(RectangleMapObject)mons2.get(i);
-            //System.out.println("Nombre: "+obj1.getName());
+
             obj2[i]=obj1;
             Rectangle rect1=obj1.getRectangle();
             salida[i]=new Rectangle(rect1.x*w,rect1.y*h,rect1.width*w,rect1.height*h);

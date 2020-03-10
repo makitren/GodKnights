@@ -18,37 +18,35 @@ import javax.swing.Renderer;
 
 import escuchadores.TecladoJugador;
 
+/**
+ * Clase Actores se encarga de crear los actores y hacerlos visibles
+ * @author alfre
+ * @version 10/03/20
+ */
+
 public class Actores extends Actor {
-    protected Sprite sprite;
-    private Rectangle dimensiones;
-    private Batch batch;
+    protected Sprite sprite; //La imagen del actor
+    private Rectangle dimensiones;//Las dimensiones del actor
+    private Batch batch;//Inicializacion del batch
     protected boolean colliding; //Nos detecta si está colisionando o no
-    protected String nombre;
-    private ShapeRenderer shapeRenderer;
+    protected String nombre;//nombre del actor
 
-    public Actores(String rutaTextura) {
-        colliding=false;
-        //Cambio Posición del Sprite
-        sprite=new Sprite(new Texture(rutaTextura));
-        batch=new SpriteBatch();
-        sprite.setBounds(30,23, Gdx.graphics.getWidth()*10,Gdx.graphics.getHeight()*10);
-        this.setSize(sprite.getWidth(),sprite.getHeight());
-        this.setPosition(sprite.getX(),sprite.getY()); //Cambio posición del actor
-        this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
-        sprite.setOrigin(this.getOriginX(),this.getOriginY());
-    }
-
-
+    /**
+     * @param rutaTextura recibe la ruta de la imagen que tendrá el actor
+     * @param x recibe el tamaño de ancho que tendrá el actor
+     * @param y recibe el tamaño de alto que tendrá el actor
+     * @param posAlt recibe la posicion en altura que tendrá el actor respecto al mapa
+     * @param posAnc recibe la posicion en anchura que tendrá el actor respecto al mapa
+     */
     public Actores(String rutaTextura, float x, float y, float posAlt, float posAnc) {
         colliding=false;
-        shapeRenderer=new ShapeRenderer();
         //Cambio Posición del Sprite
-        sprite=new Sprite(new Texture(rutaTextura));
+        sprite=new Sprite(new Texture(rutaTextura));// Recibe la imagen
         dimensiones=new Rectangle((int)x,(int)y,(int)posAlt,(int)posAnc);
         batch=new SpriteBatch();
-        sprite.setBounds(x,y, x,y);
+        sprite.setBounds(x,y, x,y);//le da al sprite recibido las coordenadas
         this.setSize(Gdx.graphics.getWidth()*100,Gdx.graphics.getHeight()*100);
-        sprite.setPosition(posAnc,posAlt);
+        sprite.setPosition(posAnc,posAlt);//coloca al actor en la posicion
         //Cambio posición del actor
 
         this.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
@@ -58,14 +56,17 @@ public class Actores extends Actor {
 
     }
 
+    /**
+     * metodo dibujarConHitbox() se encarga de dibujar los actores.
+     * metodo getHitBox() se encarga de obtener el hitbox de los actores
+     * @return devuelve el rectangulo
+     * metodo checkCollission() se encarga de comprobar si se choca contra el actor
+     * @return si colisiona o no
+     */
 
     public void dibujarConHitbox(){
         batch.begin();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.box(sprite.getX(),sprite.getY(),0,sprite.getWidth(),sprite.getHeight(),20);
-        shapeRenderer.setColor(Color.BLUE);
         sprite.draw(batch);
-        shapeRenderer.end();
         batch.end();
     }
 

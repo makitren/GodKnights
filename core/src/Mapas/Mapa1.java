@@ -196,7 +196,7 @@ public class Mapa1 extends BaseScreen {
         tableBotones=new Table();
 
         tableBotones.bottom();
-        tableBotones.debug();
+
 
         tableBotones.setFillParent(true);
         tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
@@ -221,7 +221,6 @@ public class Mapa1 extends BaseScreen {
 
 
 
-            pantalla.setDebugAll(true);
             pantalla.addActor(jugador);
 
             for(int b=0;b<colisiones.getActores().length-1;b++){

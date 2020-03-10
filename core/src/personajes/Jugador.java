@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.mygdx.game.alfredomolinacalderon.Juego;
 
@@ -173,6 +174,11 @@ public class Jugador extends Actor {
                                         juego.setPantallaActual(new Mapa1(this.juego, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getWidth() / 6.857f, baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
+                                    case "Muerto":
+                                        juego.dispose();
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
+                                        System.out.println("Entrando a mapa3");
+                                        break;
                                 }
                             }
 
@@ -233,6 +239,11 @@ public class Jugador extends Actor {
                                         juego.dispose();
                                         juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
+                                        break;
+                                    case "Muerto":
+                                        juego.dispose();
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
+                                        System.out.println("Entrando a mapa3");
                                         break;
                                 }
                             }
@@ -295,6 +306,11 @@ public class Jugador extends Actor {
                                         juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
                                         break;
+                                    case "Muerto":
+                                        juego.dispose();
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
+                                        System.out.println("Entrando a mapa3");
+                                        break;
                                 }
                             }
 
@@ -355,6 +371,11 @@ public class Jugador extends Actor {
                                         juego.dispose();
                                         juego.setPantallaActual(new Mapa1(this.juego,Gdx.graphics.getWidth()/2f,Gdx.graphics.getWidth()/6.857f,baseDeDatos));
                                         System.out.println("Entrando a mapa1");
+                                        break;
+                                    case "Muerto":
+                                        juego.dispose();
+                                        juego.setPantallaActual(new Mapa3(this.juego,Gdx.graphics.getWidth()/2.08f,Gdx.graphics.getWidth()/4.457f,baseDeDatos));
+                                        System.out.println("Entrando a mapa3");
                                         break;
                                 }
                             }

@@ -18,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -43,12 +44,14 @@ public class Mapa4 extends BaseScreen {
     private ImageButton botonArriba,botonAbajo,botonIzquierda,botonDerecha;
     private TextureAtlas buttonAtlas;
     private float posX,posY;
+    private Image gameOver;
     private char letra;
 
 
     public Mapa4(Juego g, float posicionPersonajeX, float posicionPersonajeY, BaseDeDatos bd){
         super(g);
         baseDeDatos=bd;
+        //gameOver=new Image()
         this.juego=g;
         bitmapFont=new BitmapFont(Gdx.files.internal("Mapas/score.ttf"));
         abajo=baseDeDatos.cargar()[0];
@@ -108,7 +111,6 @@ public class Mapa4 extends BaseScreen {
 
         pantalla.addActor(em);
         pantalla.addActor(sm);
-        pantalla.setDebugAll(true);
 
         buttonAtlas=new TextureAtlas("Mapas/buttons.pack");
         Skin buttonSkin=new Skin();
@@ -205,7 +207,6 @@ public class Mapa4 extends BaseScreen {
 
         tableBotones=new Table();
         tableBotones.bottom();
-        tableBotones.debug();
         tableBotones.setFillParent(true);
         tableBotones.add(botonArriba).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
         tableBotones.add(botonAbajo).height(Gdx.graphics.getHeight() / 6.4f).width(Gdx.graphics.getWidth() / 18.9666f);
@@ -284,6 +285,7 @@ public class Mapa4 extends BaseScreen {
         GlyphLayout puntosLayoutIzq=new GlyphLayout(bitmapFont, "Izq:"+izquierda);
         GlyphLayout puntosLayoutDec=new GlyphLayout(bitmapFont, "Derecha:"+derecha);
         GlyphLayout puntosLayoutArr=new GlyphLayout(bitmapFont, "Arriba:"+arriba);
+        GlyphLayout texto=new GlyphLayout(bitmapFont, "Cuidado! Si tocas los jarrones mueres");
         bitmapFont.draw(batch,puntosLayoutAba,Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/13f);
         bitmapFont.draw(batch,puntosLayoutArr,Gdx.graphics.getWidth()/4,Gdx.graphics.getHeight()/13f);
         bitmapFont.draw(batch,puntosLayoutIzq,Gdx.graphics.getWidth()/1.65f,Gdx.graphics.getHeight()/13f);
