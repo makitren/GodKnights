@@ -20,40 +20,43 @@ import actores.Actores;
 import actores.Colisiones;
 import basededatos.BaseDeDatos;
 import personajes.Jugador;
-
+/**declaracion de la clase BaseScreen
+ * @author alfre
+ * @version 10/03/20
+ */
 public class BaseScreen implements Screen {
-    protected Juego game;
-    protected World world;
-    protected Actores stage;
-    protected Stage pantalla;
+    protected Juego game;//Variable tipo Juego
+    protected Stage pantalla;//variable de tipo Stage que se encarga de tener los actores
 
-    protected TiledMap map;
+    protected TiledMap map;//variable tipo TiledMap donde se guarda el mapa
     protected static int WIDTH; //Aquí almacenaremos la anchura en tiles
     protected static int HEIGHT; //Aquí almacenaremos la altura en tiles
-    protected MapProperties properties;
-    protected AssetManager manager;
-    protected int tileWidth, tileHeight,
+    protected MapProperties properties;//Recoge las propiedasdes del mapa
+    protected int tileWidth, tileHeight,//Recoge la anchura y altura de los tiles, Anchura y Altura en Tiles, y Anchura y Altura en Pixels
             mapWidthInTiles, mapHeightInTiles,
             mapWidthInPixels, mapHeightInPixels;
-    protected OrthographicCamera camera;
-    protected Jugador jugador;
+    protected OrthographicCamera camera;//Camara del juego
+    protected Jugador jugador;//Variable de tipo Jugador
     public static final float unitScale = 1 / 32f;//Nos servirá para establecer que la pantalla se divide en tiles de 32 pixeles
     public static final float pixelsPorCuadro = 32f;
-    protected OrthogonalTiledMapRenderer renderer;
-    protected ShapeRenderer shapeRenderer;
-    protected TiledMapTileLayer terrainLayer, terrainLayer2, terrainLayer3;
-    protected Colisiones colisiones;
-    protected Table tableBotones;
-    protected float w, h;
-    protected BitmapFont bitmapFont;
-    protected Music sonidoPuerta;
-    protected Music mapaSonido;
+    protected OrthogonalTiledMapRenderer renderer;//Variable de tipo OrthogonalTiledMapRenderer que se encarga de renderizar el mapa
+    protected ShapeRenderer shapeRenderer;//Variable que dibuja los hitbox de los objetos y personaje
+    protected TiledMapTileLayer terrainLayer, terrainLayer2;// Capas del mapa que se dibujan
+    protected Colisiones colisiones;//variable de tipo Colisiones
+    protected Table tableBotones;//variable de tipo Table que guardará los botones para moverse
+    protected float w, h;//width y height del mapa
+    protected BitmapFont bitmapFont;//Letras que se insertan en la pantalla
+    protected Music sonidoPuerta;//Sonido que se ejecutará cada vez que se cierre un mapa
+    protected Music mapaSonido;//Sonido que se ejecutará durante el juego
 
-    protected int arriba, abajo, derecha, izquierda;
-    protected BaseDeDatos baseDeDatos;
-    boolean pulsado;
+    protected int arriba, abajo, derecha, izquierda;//Contador que guardará el dato de los movimientos del jugador
+    protected BaseDeDatos baseDeDatos;//objeto de tipo BaseDeDatos
+    boolean pulsado;//booleano que permite que el jugador pueda andar solo pulsando una vez el boton
 
-
+    /**
+     *
+     * @param g se le pasa parametro de tipo Juego y cada vez que haga dispose del mapa sonará la puerta
+     */
     public BaseScreen(Juego g) {
         Gdx.app.log("Pixels Altura", Gdx.graphics.getHeight() + "");
         Gdx.app.log("Pixels Anchura", Gdx.graphics.getWidth() + "");

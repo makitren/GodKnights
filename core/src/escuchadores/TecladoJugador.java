@@ -5,15 +5,29 @@ import com.badlogic.gdx.InputProcessor;
 
 import personajes.Jugador;
 
+/**declaracion de la clase TecladoJugador
+ * @author alfre
+ * @version 10/03/20
+ */
 public class TecladoJugador implements InputProcessor {
     private Jugador jugador;
 
+    /**
+     * @param j parametro de tipo jugador por el que
+     */
     public TecladoJugador(Jugador j){
         super();
         this.jugador=j;
     }
 
-
+    /**
+     *
+     * @param keycode recibe un parametro de tipo int que escuchará el teclado
+     * @return false
+     * keyTyped detecta si se mantiene pulsado una tecla o una imagen
+     * keyDown detecta si se ha pulsado
+     * keyUp detecta si se levanta el dedo o la imagen
+     */
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -57,10 +71,6 @@ public class TecladoJugador implements InputProcessor {
             case 'f':
                 jugador.moverJugador('f');
                 break;
-            case Input.Keys.SPACE:
-                jugador.pararJugador();
-                break;
-
         }
         return false;
     }

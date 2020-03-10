@@ -7,13 +7,20 @@ import android.database.sqlite.SQLiteDatabase;
 
 import basededatos.BaseDeDatos;
 
+/**declaracion de la clase BaseScreen
+ * @author alfre
+ * @version 10/03/20
+ */
 public class BaseDeDatosAndroid implements BaseDeDatos {
     private BDOpenHelper openHelper;
-
+    //Constructor que recibe por parametro un Context
     public BaseDeDatosAndroid(Context c){
         openHelper=new BDOpenHelper(c,1);
     }
 
+    /*
+    Funcion cargar() carga los datos de la base de datos y permite usarlos en el juego
+     */
     @Override
     public int[] cargar(){
         int[] puntuaciones=new int[4];
@@ -31,12 +38,21 @@ public class BaseDeDatosAndroid implements BaseDeDatos {
        return puntuaciones;
     }
 
+    /**
+     *
+     * @param movimientosArriba guarda el numero de veces que ha ido el personaje hacia arriba
+     * @param movimientosAbajo guarda el numero de veces que ha ido el personaje hacia abajo
+     * @param movimientosDerecha guarda el numero de veces que ha ido el personaje hacia derecha
+     * @param movimientosIzquierda guarda el numero de veces que ha ido el personaje hacia izquierda
+     */
      @Override
     public void guardar(int movimientosArriba, int movimientosAbajo, int movimientosDerecha, int movimientosIzquierda) {
         SQLiteDatabase db=openHelper.getWritableDatabase();
         Cursor c=db.query("numeroMovimientos",
                 null,null,null,
                 null,null,null);
+
+
 
         ContentValues cv=new ContentValues();
         cv.put("movimientosArriba",movimientosArriba);
